@@ -1,19 +1,15 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <div class="bg"></div>
-    <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
+  <div>
+      <router-view/>
+    <Footer></Footer>
   </div>
 </template>
-
 <script>
-  
-  // import HelloWorld from './components/HelloWorld.vue'
-
+  import Footer from './components/common/footer'
   export default {
     name: 'app',
     components: {
-      // HelloWorld
+      Footer
     },
     created() {
       this.test();
@@ -42,11 +38,6 @@
     text-align: center;
     color: #2c3e50;
     margin-top: 60px;
-  }
-
-  .bg {
-    width: 50px;
-    height: 50px;
-    background-color: $color;
+    background-color: #fff;
   }
 </style>

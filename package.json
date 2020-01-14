@@ -10,7 +10,8 @@
   "dependencies": {
     "core-js": "^2.6.5",
     "jquery": "^3.4.1",
-    "vue": "^2.6.10"
+    "vue": "^2.6.10",
+    "vue-router": "^3.0.7"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.9.0",
@@ -23,6 +24,7 @@
     "lodash": "^4.17.15",
     "node-sass": "^4.12.0",
     "sass-loader": "^7.1.0",
+    "svg-sprite-loader": "^4.1.6",
     "vue-template-compiler": "^2.6.10"
   },
   "eslintConfig": {

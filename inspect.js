@@ -37,7 +37,6 @@
   },
   resolveLoader: {
     modules: [
-      'D:\\myproject\\vue-wangyi\\node_modules\\@vue\\cli-plugin-eslint\\node_modules',
       'D:\\myproject\\vue-wangyi\\node_modules\\@vue\\cli-plugin-babel\\node_modules',
       'node_modules',
       'D:\\myproject\\vue-wangyi\\node_modules',
@@ -55,7 +54,7 @@
             loader: 'cache-loader',
             options: {
               cacheDirectory: 'D:\\myproject\\vue-wangyi\\node_modules\\.cache\\vue-loader',
-              cacheIdentifier: '24182486'
+              cacheIdentifier: '27cc660f'
             }
           },
           {
@@ -65,7 +64,7 @@
                 preserveWhitespace: false
               },
               cacheDirectory: 'D:\\myproject\\vue-wangyi\\node_modules\\.cache\\vue-loader',
-              cacheIdentifier: '24182486'
+              cacheIdentifier: '27cc660f'
             }
           }
         ]
@@ -81,7 +80,7 @@
               fallback: {
                 loader: 'file-loader',
                 options: {
-                  name: 'img/[name].[hash:8].[ext]'
+                  name: 'public/img/[name].[hash:8].[ext]'
                 }
               }
             }
@@ -90,15 +89,7 @@
       },
       /* config.module.rule('svg') */
       {
-        test: /\.(svg)(\?.*)?$/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: 'img/[name].[hash:8].[ext]'
-            }
-          }
-        ]
+        test: /\.(svg)(\?.*)?$/
       },
       /* config.module.rule('media') */
       {
@@ -111,7 +102,7 @@
               fallback: {
                 loader: 'file-loader',
                 options: {
-                  name: 'media/[name].[hash:8].[ext]'
+                  name: 'public/media/[name].[hash:8].[ext]'
                 }
               }
             }
@@ -129,7 +120,7 @@
               fallback: {
                 loader: 'file-loader',
                 options: {
-                  name: 'fonts/[name].[hash:8].[ext]'
+                  name: 'public/fonts/[name].[hash:8].[ext]'
                 }
               }
             }
@@ -171,10 +162,10 @@
             resourceQuery: /module/,
             use: [
               {
-                loader: 'vue-style-loader',
+                loader: 'D:\\myproject\\vue-wangyi\\node_modules\\mini-css-extract-plugin\\dist\\loader.js',
                 options: {
-                  sourceMap: false,
-                  shadowMode: false
+                  hmr: true,
+                  publicPath: '../../'
                 }
               },
               {
@@ -199,10 +190,10 @@
             resourceQuery: /\?vue/,
             use: [
               {
-                loader: 'vue-style-loader',
+                loader: 'D:\\myproject\\vue-wangyi\\node_modules\\mini-css-extract-plugin\\dist\\loader.js',
                 options: {
-                  sourceMap: false,
-                  shadowMode: false
+                  hmr: true,
+                  publicPath: '../../'
                 }
               },
               {
@@ -225,10 +216,10 @@
             test: /\.module\.\w+$/,
             use: [
               {
-                loader: 'vue-style-loader',
+                loader: 'D:\\myproject\\vue-wangyi\\node_modules\\mini-css-extract-plugin\\dist\\loader.js',
                 options: {
-                  sourceMap: false,
-                  shadowMode: false
+                  hmr: true,
+                  publicPath: '../../'
                 }
               },
               {
@@ -252,10 +243,10 @@
           {
             use: [
               {
-                loader: 'vue-style-loader',
+                loader: 'D:\\myproject\\vue-wangyi\\node_modules\\mini-css-extract-plugin\\dist\\loader.js',
                 options: {
-                  sourceMap: false,
-                  shadowMode: false
+                  hmr: true,
+                  publicPath: '../../'
                 }
               },
               {
@@ -284,10 +275,10 @@
             resourceQuery: /module/,
             use: [
               {
-                loader: 'vue-style-loader',
+                loader: 'D:\\myproject\\vue-wangyi\\node_modules\\mini-css-extract-plugin\\dist\\loader.js',
                 options: {
-                  sourceMap: false,
-                  shadowMode: false
+                  hmr: true,
+                  publicPath: '../../'
                 }
               },
               {
@@ -312,10 +303,10 @@
             resourceQuery: /\?vue/,
             use: [
               {
-                loader: 'vue-style-loader',
+                loader: 'D:\\myproject\\vue-wangyi\\node_modules\\mini-css-extract-plugin\\dist\\loader.js',
                 options: {
-                  sourceMap: false,
-                  shadowMode: false
+                  hmr: true,
+                  publicPath: '../../'
                 }
               },
               {
@@ -338,10 +329,10 @@
             test: /\.module\.\w+$/,
             use: [
               {
-                loader: 'vue-style-loader',
+                loader: 'D:\\myproject\\vue-wangyi\\node_modules\\mini-css-extract-plugin\\dist\\loader.js',
                 options: {
-                  sourceMap: false,
-                  shadowMode: false
+                  hmr: true,
+                  publicPath: '../../'
                 }
               },
               {
@@ -365,10 +356,10 @@
           {
             use: [
               {
-                loader: 'vue-style-loader',
+                loader: 'D:\\myproject\\vue-wangyi\\node_modules\\mini-css-extract-plugin\\dist\\loader.js',
                 options: {
-                  sourceMap: false,
-                  shadowMode: false
+                  hmr: true,
+                  publicPath: '../../'
                 }
               },
               {
@@ -397,10 +388,10 @@
             resourceQuery: /module/,
             use: [
               {
-                loader: 'vue-style-loader',
+                loader: 'D:\\myproject\\vue-wangyi\\node_modules\\mini-css-extract-plugin\\dist\\loader.js',
                 options: {
-                  sourceMap: false,
-                  shadowMode: false
+                  hmr: true,
+                  publicPath: '../../'
                 }
               },
               {
@@ -431,10 +422,10 @@
             resourceQuery: /\?vue/,
             use: [
               {
-                loader: 'vue-style-loader',
+                loader: 'D:\\myproject\\vue-wangyi\\node_modules\\mini-css-extract-plugin\\dist\\loader.js',
                 options: {
-                  sourceMap: false,
-                  shadowMode: false
+                  hmr: true,
+                  publicPath: '../../'
                 }
               },
               {
@@ -463,10 +454,10 @@
             test: /\.module\.\w+$/,
             use: [
               {
-                loader: 'vue-style-loader',
+                loader: 'D:\\myproject\\vue-wangyi\\node_modules\\mini-css-extract-plugin\\dist\\loader.js',
                 options: {
-                  sourceMap: false,
-                  shadowMode: false
+                  hmr: true,
+                  publicPath: '../../'
                 }
               },
               {
@@ -496,10 +487,10 @@
           {
             use: [
               {
-                loader: 'vue-style-loader',
+                loader: 'D:\\myproject\\vue-wangyi\\node_modules\\mini-css-extract-plugin\\dist\\loader.js',
                 options: {
-                  sourceMap: false,
-                  shadowMode: false
+                  hmr: true,
+                  publicPath: '../../'
                 }
               },
               {
@@ -534,10 +525,10 @@
             resourceQuery: /module/,
             use: [
               {
-                loader: 'vue-style-loader',
+                loader: 'D:\\myproject\\vue-wangyi\\node_modules\\mini-css-extract-plugin\\dist\\loader.js',
                 options: {
-                  sourceMap: false,
-                  shadowMode: false
+                  hmr: true,
+                  publicPath: '../../'
                 }
               },
               {
@@ -569,10 +560,10 @@
             resourceQuery: /\?vue/,
             use: [
               {
-                loader: 'vue-style-loader',
+                loader: 'D:\\myproject\\vue-wangyi\\node_modules\\mini-css-extract-plugin\\dist\\loader.js',
                 options: {
-                  sourceMap: false,
-                  shadowMode: false
+                  hmr: true,
+                  publicPath: '../../'
                 }
               },
               {
@@ -602,10 +593,10 @@
             test: /\.module\.\w+$/,
             use: [
               {
-                loader: 'vue-style-loader',
+                loader: 'D:\\myproject\\vue-wangyi\\node_modules\\mini-css-extract-plugin\\dist\\loader.js',
                 options: {
-                  sourceMap: false,
-                  shadowMode: false
+                  hmr: true,
+                  publicPath: '../../'
                 }
               },
               {
@@ -636,10 +627,10 @@
           {
             use: [
               {
-                loader: 'vue-style-loader',
+                loader: 'D:\\myproject\\vue-wangyi\\node_modules\\mini-css-extract-plugin\\dist\\loader.js',
                 options: {
-                  sourceMap: false,
-                  shadowMode: false
+                  hmr: true,
+                  publicPath: '../../'
                 }
               },
               {
@@ -675,10 +666,10 @@
             resourceQuery: /module/,
             use: [
               {
-                loader: 'vue-style-loader',
+                loader: 'D:\\myproject\\vue-wangyi\\node_modules\\mini-css-extract-plugin\\dist\\loader.js',
                 options: {
-                  sourceMap: false,
-                  shadowMode: false
+                  hmr: true,
+                  publicPath: '../../'
                 }
               },
               {
@@ -709,10 +700,10 @@
             resourceQuery: /\?vue/,
             use: [
               {
-                loader: 'vue-style-loader',
+                loader: 'D:\\myproject\\vue-wangyi\\node_modules\\mini-css-extract-plugin\\dist\\loader.js',
                 options: {
-                  sourceMap: false,
-                  shadowMode: false
+                  hmr: true,
+                  publicPath: '../../'
                 }
               },
               {
@@ -741,10 +732,10 @@
             test: /\.module\.\w+$/,
             use: [
               {
-                loader: 'vue-style-loader',
+                loader: 'D:\\myproject\\vue-wangyi\\node_modules\\mini-css-extract-plugin\\dist\\loader.js',
                 options: {
-                  sourceMap: false,
-                  shadowMode: false
+                  hmr: true,
+                  publicPath: '../../'
                 }
               },
               {
@@ -774,10 +765,10 @@
           {
             use: [
               {
-                loader: 'vue-style-loader',
+                loader: 'D:\\myproject\\vue-wangyi\\node_modules\\mini-css-extract-plugin\\dist\\loader.js',
                 options: {
-                  sourceMap: false,
-                  shadowMode: false
+                  hmr: true,
+                  publicPath: '../../'
                 }
               },
               {
@@ -812,10 +803,10 @@
             resourceQuery: /module/,
             use: [
               {
-                loader: 'vue-style-loader',
+                loader: 'D:\\myproject\\vue-wangyi\\node_modules\\mini-css-extract-plugin\\dist\\loader.js',
                 options: {
-                  sourceMap: false,
-                  shadowMode: false
+                  hmr: true,
+                  publicPath: '../../'
                 }
               },
               {
@@ -847,10 +838,10 @@
             resourceQuery: /\?vue/,
             use: [
               {
-                loader: 'vue-style-loader',
+                loader: 'D:\\myproject\\vue-wangyi\\node_modules\\mini-css-extract-plugin\\dist\\loader.js',
                 options: {
-                  sourceMap: false,
-                  shadowMode: false
+                  hmr: true,
+                  publicPath: '../../'
                 }
               },
               {
@@ -880,10 +871,10 @@
             test: /\.module\.\w+$/,
             use: [
               {
-                loader: 'vue-style-loader',
+                loader: 'D:\\myproject\\vue-wangyi\\node_modules\\mini-css-extract-plugin\\dist\\loader.js',
                 options: {
-                  sourceMap: false,
-                  shadowMode: false
+                  hmr: true,
+                  publicPath: '../../'
                 }
               },
               {
@@ -914,10 +905,10 @@
           {
             use: [
               {
-                loader: 'vue-style-loader',
+                loader: 'D:\\myproject\\vue-wangyi\\node_modules\\mini-css-extract-plugin\\dist\\loader.js',
                 options: {
-                  sourceMap: false,
-                  shadowMode: false
+                  hmr: true,
+                  publicPath: '../../'
                 }
               },
               {
@@ -955,7 +946,7 @@
             loader: 'cache-loader',
             options: {
               cacheDirectory: 'D:\\myproject\\vue-wangyi\\node_modules\\.cache\\babel-loader',
-              cacheIdentifier: '1183a2ff'
+              cacheIdentifier: 'e6822f62'
             }
           },
           {
@@ -963,29 +954,17 @@
           }
         ]
       },
-      /* config.module.rule('eslint') */
+      /* config.module.rule('svg1') */
       {
-        enforce: 'pre',
-        test: /\.(vue|(j|t)sx?)$/,
-        exclude: [
-          /node_modules/,
-          'D:\\myproject\\vue-wangyi\\node_modules\\@vue\\cli-service\\lib'
+        test: /\.svg$/,
+        include: [
+          'D:\\myproject\\vue-wangyi\\src\\iconfont'
         ],
         use: [
           {
-            loader: 'eslint-loader',
+            loader: 'svg-sprite-loader',
             options: {
-              extensions: [
-                '.js',
-                '.jsx',
-                '.vue'
-              ],
-              cache: true,
-              cacheIdentifier: '7e51b0c5',
-              emitWarning: true,
-              emitError: false,
-              eslintPath: 'D:\\myproject\\vue-wangyi\\node_modules\\eslint',
-              formatter: function () { /* omitted long function */ }
+              symbolId: 'icon-[name]'
             }
           }
         ]
@@ -1017,33 +996,63 @@
         ]
       }
     ),
+    /* config.plugin('extract-css') */
+    new MiniCssExtractPlugin(
+      {
+        filename: 'public/css/[name].[contenthash:8].css',
+        chunkFilename: 'public/css/[name].[contenthash:8].css'
+      }
+    ),
     /* config.plugin('hmr') */
     new HotModuleReplacementPlugin(),
     /* config.plugin('progress') */
     new ProgressPlugin(),
-    /* config.plugin('html') */
+    /* config.plugin('html-index') */
     new HtmlWebpackPlugin(
       {
         templateParameters: function () { /* omitted long function */ },
-        template: 'D:\\myproject\\vue-wangyi\\public\\index.html'
+        chunks: [
+          'chunk-vendors',
+          'chunk-common',
+          'index'
+        ],
+        template: 'public/index.html',
+        filename: 'index.html',
+        title: 'Index Page'
       }
     ),
-    /* config.plugin('preload') */
+    /* config.plugin('preload-index') */
     new PreloadPlugin(
       {
         rel: 'preload',
-        include: 'initial',
+        includeHtmlNames: [
+          'index.html'
+        ],
+        include: {
+          type: 'initial',
+          entries: [
+            'index'
+          ]
+        },
         fileBlacklist: [
           /\.map$/,
           /hot-update\.js$/
         ]
       }
     ),
-    /* config.plugin('prefetch') */
+    /* config.plugin('prefetch-index') */
     new PreloadPlugin(
       {
         rel: 'prefetch',
-        include: 'asyncChunks'
+        includeHtmlNames: [
+          'index.html'
+        ],
+        include: {
+          type: 'asyncChunks',
+          entries: [
+            'index'
+          ]
+        }
       }
     ),
     /* config.plugin('copy') */
@@ -1054,7 +1063,8 @@
           to: 'D:\\myproject\\vue-wangyi\\dist',
           toType: 'dir',
           ignore: [
-            '.DS_Store'
+            '.DS_Store',
+            'public/index.html'
           ]
         }
       ]
@@ -1068,8 +1078,8 @@
     }
   ],
   entry: {
-    app: [
-      './src/main.js'
+    index: [
+      'D:\\myproject\\vue-wangyi\\src\\main.js'
     ]
   }
 }

@@ -7,12 +7,27 @@
 </template>
 
 <script>
+  
   // import HelloWorld from './components/HelloWorld.vue'
 
   export default {
     name: 'app',
     components: {
       // HelloWorld
+    },
+    created() {
+      this.test();
+    },
+    methods: {
+      async test() {
+        var aaa = await this.$http.get('/simi/playlist?id=347230&timestamp=1503019930000');
+        var playlists = aaa.playlists;
+        console.log(playlists);
+        _.map(playlists,(item,index) => {
+          console.log(item);
+          console.log(index);
+        });
+      }
     }
   }
 </script>

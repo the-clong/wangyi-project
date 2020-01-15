@@ -1,0 +1,44 @@
+{
+  "id": "1310167",
+  "name": "wangyi-project",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "自己项目的iconfont",
+  "glyphs": [
+    {
+      "icon_id": "382956",
+      "name": "群蜂账号管理",
+      "font_class": "zhanghao",
+      "unicode": "e660",
+      "unicode_decimal": 58976
+    },
+    {
+      "icon_id": "580880",
+      "name": "我的",
+      "font_class": "profile",
+      "unicode": "e609",
+      "unicode_decimal": 58889
+    },
+    {
+      "icon_id": "1311622",
+      "name": "发现",
+      "font_class": "faxian",
+      "unicode": "e608",
+      "unicode_decimal": 58888
+    },
+    {
+      "icon_id": "2901897",
+      "name": "视频",
+      "font_class": "shipin",
+      "unicode": "e649",
+      "unicode_decimal": 58953
+    },
+    {
+      "icon_id": "4166140",
+      "name": "朋友",
+      "font_class": "pengyou1",
+      "unicode": "e61a",
+      "unicode_decimal": 58906
+    }
+  ]
+}

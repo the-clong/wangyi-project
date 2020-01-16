@@ -1,13 +1,13 @@
 <template>
   <div id="footer-guide">
     <ul class="foot-list">
-      <router-link tag="li" @click.native="changeFootItem(index)" v-for="(item,index) in footList" :to="item.path" :key="index" :class="{'active': currentActiveIndex === index}">
+      <router-link tag="li" v-for="(item,index) in footList" :to="item.path" :key="index" :class="{'active': $route.path.indexOf(item.path) > -1}">
         <div class="icon-contain">
           <svg class="svg-icon" aria-hidden="true">
-            <use :xlink:href="'#icon-' + item.icon"></use>
+            <use :xlink:href="'#icon-' + item.meta.icon"></use>
           </svg>
         </div>
-        <div class="foot-text">{{item.text}}</div>
+        <div class="foot-text">{{item.meta.title}}</div>
       </router-link>
     </ul>
   </div>
@@ -17,41 +17,12 @@ export default {
   data () {
     return {
       currentActiveIndex: -1,
-      footList: [{
-        text: '发现',
-        icon: 'faxian',
-        path: '/discover'
-      },
-      {
-        text: '视频',
-        icon: 'shipin',
-        path: '/videolist'
-      },
-      {
-        text: '我的',
-        icon: 'profile',
-        path: '/profile'
-      },
-      {
-        text: '朋友',
-        icon: 'pengyou1',
-        path: '/friends'
-      },
-      {
-        text: '账号',
-        icon: 'zhanghao',
-        path: '/account'
-      },
-      ]
+      footList: []
     }
   },
   created () {
-    let route = this.$route.matched;  // 当前路由
-    let routes = this.$router.options.routes; //当前路由的同级路由
-    console.log(route);
-    console.log(_.find(routes, { 'path': route[0]['path'] }));
-    // _.find(this.footList,{path: })
-    console.log('created------');
+    let routes = this.$router.options.routes; //获取所有路由
+    this.footList = _.find(routes, { 'path': '/home' })['children']; //获取Home路由的子节点
   },
   watch: {
     '$route': function (route) {
@@ -62,7 +33,6 @@ export default {
   },
   methods: {
     changeFootItem (index) {
-      console.log('click------');
       this.currentActiveIndex = index;
     }
   }

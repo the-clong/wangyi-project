@@ -6,6 +6,13 @@
   "description": "自己项目的iconfont",
   "glyphs": [
     {
+      "icon_id": "339514",
+      "name": "QQ",
+      "font_class": "icon",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
       "icon_id": "382956",
       "name": "群蜂账号管理",
       "font_class": "zhanghao",
@@ -20,11 +27,32 @@
       "unicode_decimal": 58889
     },
     {
+      "icon_id": "978353",
+      "name": "新浪微博",
+      "font_class": "weibo",
+      "unicode": "e63d",
+      "unicode_decimal": 58941
+    },
+    {
       "icon_id": "1311622",
       "name": "发现",
       "font_class": "faxian",
       "unicode": "e608",
       "unicode_decimal": 58888
+    },
+    {
+      "icon_id": "1382584",
+      "name": "微信 (1)",
+      "font_class": "weixin",
+      "unicode": "e659",
+      "unicode_decimal": 58969
+    },
+    {
+      "icon_id": "1613453",
+      "name": "邮箱",
+      "font_class": "youxiang",
+      "unicode": "e604",
+      "unicode_decimal": 58884
     },
     {
       "icon_id": "2901897",

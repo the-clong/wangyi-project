@@ -1,37 +1,57 @@
 <template>
   <div id="app">
     <router-view />
+    <Footer v-if="$route.path.indexOf('/home') > -1" />
+    <Player></Player>
+    <!-- shell -->
   </div>
 </template>
 <script>
+import Footer from '@/components/common/footer';
+import Player from '@/components/common/player';
 export default {
   name: 'app',
   components: {
+    Footer, Player
+  },
+  data () {
+    return {
+      a: 1
+    };
   },
   created () {
-    this.test();
+    // function makeSetInterval (start) {
+    //   if (start) {
+    //     setTimeout(() => {
+    //       console.log(new Date());
+    //       console.log('外层setTime----');
+    //       setTimeout(() => {
+    //         console.log(new Date());
+    //         console.log('里层setTime----');
+    //       }, 10000);
+    //       makeSetInterval(start);
+    //     }, 1000);
+    //   } else {
+    //     console.log('停止运行');
+    //   }
+    // }
+    // makeSetInterval(true);
+    // this.test();
+
   },
   methods: {
-    async test () {
-      let aaa = await this.$http.fetch('/simi/playlist', { id: '347230', timestamp: 1503019930000 }, 'GET');
-      let playlists = aaa.playlists;
-      _.map(playlists, (item, index) => {
-        console.log(item);
-        console.log(index);
-      });
-    }
   }
-}
+};
 </script>
 
 <style lang="scss">
-@import './style/common';
+@import '@/common/css/index.scss';
 
 #app {
+  position: absolute;
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
   width: 100%;
   height: 100%;

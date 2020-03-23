@@ -1,0 +1,9 @@
+export const SET_USER_TOKEN = 'SET_USER_TOKEN';
+export const USER_LOGOUT = 'USER_LOGOUT';
+export const SET_SINGER = 'SET_SINGER';// 当前歌手
+export const SET_PLAYLIST = 'SET_PLAYLIST';// 设置歌曲列表
+export const SET_SEQUENCE_LIST = 'SET_SEQUENCE_LIST';// 设置顺序歌曲列表
+export const SET_CURRENT_INDEX = 'SET_CURRENT_INDEX';// 设置当前歌曲
+export const SET_FULLSCREEN = 'SET_FULLSCREEN';// 设置是否全屏
+export const SET_PLAY_STATE = 'SET_PLAY_STATE';// 设置播放状态
+export const SET_PLAY_MODE = 'SET_PLAY_MODE';// 设置播放模式

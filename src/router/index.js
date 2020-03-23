@@ -1,5 +1,5 @@
 
-import Vue from "vue";
+import Vue from 'vue';
 import VueRouter from 'vue-router';
 import home from './home';
 import common from './common';
@@ -13,16 +13,13 @@ export default new VueRouter({
   // 判断路由跳转行为，如果有keepAlive，那么跳转到原先浏览的位置(主要用于移动端vue缓存)
   scrollBehavior (to, from, savedPosition) {
     if (savedPosition) {
-      return savedPosition
+      return savedPosition;
     } else {
+      console.log(document.body.scrollTop);
       if (from.meta.keepAlive) {
-        from.meta.savedPosition = document.body.scrollTop
+        from.meta.savedPosition = document.documentElement.scrollTop || document.body.scrollTop;
       }
-      return { x: 0, y: to.meta.savedPosition || 0 }
+      return { x: 0, y: to.meta.savedPosition || 0 };
     }
-  },
-  beforeEach (to, from, next) {
-    document.title = to.meta.title || 'ap-web-new';
-    next();
   }
 });

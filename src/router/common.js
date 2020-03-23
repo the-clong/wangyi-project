@@ -1,12 +1,5 @@
-//常用的路由，包括login,404,home等等
+// 常用的路由，包括login,404,home等等
 export default [
-  // {
-  //   path: '/test',
-  //   meta: {
-  //     title: '测试'
-  //   },
-  //   component: () => import('@/views/test')
-  // },
   {
     name: 'common-login',
     path: '/login',
@@ -16,11 +9,23 @@ export default [
     component: () => import('@/pages/login')
   },
   {
+    name: 'phone-login',
+    path: '/phoneLogin',
+    meta: {
+      title: '手机登录'
+    },
+    component: () => import('@/pages/login/phone')
+  },
+  {
     path: '/',
     redirect: '/login'
+  },
+  {
+    path: '/test',
+    component: () => import('@/pages/test')
   },
   {
     path: '*',
     components: () => import('@/pages/_404')
   }
-]
+];

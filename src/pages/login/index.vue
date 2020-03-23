@@ -6,7 +6,7 @@
       </div>
     </section>
     <section class="phone-login">
-      <div class="phone-btn">手机号登录</div>
+      <div class="phone-btn" @click="phoneLogin">手机号登录</div>
       <ul>
         <li v-for="(item,index) in loginWays" :key="index">
           <div class="icon-contain">
@@ -17,15 +17,21 @@
         </li>
       </ul>
       <div class="accept-terms">
-        <input name="Fruit" type="radio" value="" />同意<a>《服务条款》</a><a>《隐私策略》</a><a>《儿童隐私策略》</a>
+        同意<a>《服务条款》</a><a>《隐私策略》</a><a>《儿童隐私策略》</a>
       </div>
     </section>
+    <!-- <Prompt :message="propmtMsg"></Prompt> -->
   </div>
 </template>
 <script>
+// import Prompt from '@/components/common/prompt';
 export default {
+  components: {
+    // Prompt
+  },
   data () {
     return {
+      propmtMsg: '提示信息呱唧呱唧共和国环境不会就画江湖',
       loginWays: [
         {
           icon: 'weixin'
@@ -38,17 +44,24 @@ export default {
         },
         {
           icon: 'youxiang'
-        },
+        }
       ]
-    }
+    };
   },
   created () {
     console.log('created----');
+  },
+  methods: {
+    phoneLogin () {
+      this.$router.push({
+        path: '/phoneLogin'
+      });
+    }
   }
-}
+};
 </script>
 <style lang="scss" scoped>
-@import 'src/style/mixin';
+@import '~@/common/css/mixin';
 #common-login {
   background-color: #db2b1f;
   width: 100%;
@@ -98,6 +111,7 @@ export default {
       justify-content: space-between;
       & > li {
         & > .icon-contain {
+          padding: 0.5rem 0;
           font-size: 2rem;
           width: 3rem;
           height: 3rem;

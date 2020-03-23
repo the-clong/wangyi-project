@@ -7,40 +7,58 @@ export default [
     },
     children: [
       {
-        path: 'discover',
+        path: '/home/discover',
+        component: () => import('@/pages/home/discover'),
         meta: {
           icon: 'faxian',
-          title: '发现'
-        }
+          title: '发现',
+          requireAuth: true,
+          keepAlive: true
+        },
+        children: [
+          {
+            path: '/home/discover/rank',
+            component: () => import('@/components/discover-recommend')
+          }
+        ]
       },
       {
-        path: 'videolist',
+        path: '/home/videolist',
         meta: {
           icon: 'shipin',
           title: '视频'
-        }
+        },
+        component: () => import('@/pages/home/videolist')
       },
       {
-        path: 'profile',
+        path: '/home/profile',
         meta: {
           icon: 'profile',
           title: '我的'
         }
       },
       {
-        path: 'friends',
+        path: '/home/singerList',
+        component: () => import('@/pages/home/singer-list'),
         meta: {
           icon: 'pengyou1',
-          title: '云村'
-        }
+          title: '歌手',
+          keepAlive: true
+        },
+        children: [
+          {
+            path: ':id',
+            component: () => import('@/pages/home/singer-list/singer-detail')
+          }
+        ]
       },
       {
-        path: 'account',
+        path: '/home/account',
         meta: {
           icon: 'zhanghao',
           title: '账号'
         }
-      },
+      }
     ],
     redirect: '/home/discover'
   }

@@ -1,21 +1,30 @@
 <template>
   <div id="home">
-    <Header />
-    <router-view />
-    <Footer />
+    <keep-alive>
+      <router-view />
+    </keep-alive>
   </div>
 </template>
 <script>
-import Footer from '@/components/common/footer';
-import Header from '@/components/common/header';
 export default {
   components: {
-    Footer, Header
+
   },
   data () {
     return {
 
-    }
+    };
   }
-}
+};
 </script>
+<style lang="scss">
+#home {
+  position: relative;
+  padding-top: 60px;
+  top: 0;
+  bottom: 65px;
+  width: 100%;
+  height: calc(100% - 65px);
+  overflow-y: auto;
+}
+</style>

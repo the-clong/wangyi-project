@@ -1,6 +1,7 @@
 const webpack = require('webpack')
 const path = require('path')
 // const zopfli = require("@gfx/zopfli");//zopfli压缩
+// const { SkeletonPlugin } = require('page-skeleton-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const CompressionPlugin = require('compression-webpack-plugin') // Gzip
 const productionGzipExtensions = /\.(js|css|json|txt|html|ico|svg)(\?.*)?$/i
@@ -26,7 +27,7 @@ module.exports = {
         plugins: [
           require('postcss-px-to-viewport')({
             unitToConvert: 'px',
-            viewportWidth: 750,
+            viewportWidth: 375,
             unitPrecision: 3,
             viewportUnit: 'vw',
             fontViewportUnit: 'vw',
@@ -78,6 +79,13 @@ module.exports = {
         Popper: ['popper.js', 'default']
       })
     )
+    // config.plugins.push(
+    //   new SkeletonPlugin({
+    //     pathname: path.resolve(__dirname, './shell'), // 用来存储 shell 文件的地址
+    //     staticDir: path.resolve(__dirname, './dist'), // 最好和 `output.path` 相同
+    //     routes: ['/', '/search'], // 将需要生成骨架屏的路由添加到数组中
+    //   })
+    // )
     if (isProduction) {
       config.plugins.push(
         new CompressionPlugin({
@@ -133,7 +141,6 @@ module.exports = {
         return options
       })
       .end()
-
     config
       // https://webpack.js.org/configuration/devtool/#development
       .when(process.env.NODE_ENV === 'development',
@@ -143,6 +150,10 @@ module.exports = {
     config
       .when(process.env.NODE_ENV !== 'development',
         config => {
+          config.plugin('html').tap(opts => {
+            opts[0].minify.removeComments = false
+            return opts
+          })
           config
             .plugin('ScriptExtHtmlWebpackPlugin')
             .after('html')

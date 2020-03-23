@@ -1,0 +1,13 @@
+//宽高
+@mixin wh($width, $height) {
+  width: $width;
+  height: $height;
+}
+
+// 水平垂直都居中并设置字体大小
+@mixin lh($height, $fontSize:1rem) {
+  height: $height;
+  line-height: $height;
+  font-size: $fontSize;
+  text-align: center;
+}

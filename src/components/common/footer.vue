@@ -1,7 +1,8 @@
 <template>
   <div id="footer-guide">
+    <div class="foot-bg"></div>
     <ul class="foot-list">
-      <router-link tag="li" v-for="(item,index) in footList" :to="item.path" :key="index" :class="{'active': $route.path.indexOf(item.path) > -1}">
+      <router-link tag="li" v-for="(item,index) in footList" :to="item.path" :key="index">
         <div class="icon-contain">
           <svg class="svg-icon" aria-hidden="true">
             <use :xlink:href="'#icon-' + item.meta.icon"></use>
@@ -13,39 +14,56 @@
   </div>
 </template>
 <script>
+import _ from 'lodash';
 export default {
   data () {
     return {
       currentActiveIndex: -1,
       footList: []
-    }
+    };
   },
   created () {
-    let routes = this.$router.options.routes; //获取所有路由
-    this.footList = _.find(routes, { 'path': '/home' })['children']; //获取Home路由的子节点
+    const routes = this.$router.options.routes; // 获取所有路由
+    this.footList = _.find(routes, { path: '/home' }).children; // 获取Home路由的子节点
   },
   watch: {
-    '$route': function (route) {
-      this.currentActiveIndex = _.findIndex(this.footList, (item) => {
-        return item.path === route.fullPath;
-      });
-    }
+    // '$route': function (route) {
+    //   this.currentActiveIndex = _.findIndex(this.footList, (item) => {
+    //     return item.path === route.fullPath;
+    //   });
+    // }
   },
   methods: {
-    changeFootItem (index) {
-      this.currentActiveIndex = index;
-    }
+    // changeFootItem (index) {
+    //   this.currentActiveIndex = index;
+    // }
   }
-}
+};
 </script>
 <style lang="scss" scoped>
-@import 'src/style/mixin';
+@import '~@/common/css/mixin';
 #footer-guide {
   width: 100%;
   position: fixed;
+  /* z-index: 10; */
   bottom: 0;
   left: 0;
+  height: 65px;
+  /* filter: blur(1rem);
+  background: rgba(232, 232, 232, 0.1); */
+  .foot-bg {
+    z-index: -1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    @include wh(100%, 100%);
+    filter: blur(1rem);
+    background: rgba(232, 232, 232, 0.1);
+  }
   .foot-list {
+    width: 100%;
+    position: absolute;
+    z-index: 10;
     padding: 5px;
     display: flex;
     justify-content: space-between;
@@ -65,8 +83,9 @@ export default {
       & > .foot-text {
         font-size: 0.4rem;
         color: #666;
+        padding: 0.2rem 0;
       }
-      &.active {
+      &.router-link-active {
         .icon-contain {
           background-color: red;
           > .svg-icon {

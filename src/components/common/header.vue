@@ -2,44 +2,100 @@
   <div id="header-title">
     <section class="icon-contain">
       <svg class="svg-icon" aria-hidden="true">
-        <use xlink:href="#icon-zhanghao"></use>
+        <use xlink:href="#icon-yuyin"></use>
       </svg>
     </section>
     <section class="header-search">
-      <input placeholder="请输入" />
+      <input :placeholder="placeholder" />
     </section>
     <section class="header-img">
-      <a href="">登录</a>
-      <!-- <img src="http://p4.music.126.net/RLeBJe4D1ZzUtltxfoKDMg==/109951163250239066.jpg?param=30y30" /> -->
+      <a href="/login" v-if="isNeedLogin">登录</a>
     </section>
   </div>
 </template>
 <script>
+import * as searchApi from '@/api/search';
+import * as userApi from '@/api/user';
+import { mapMutations } from 'vuex';
+import Song from '@/common/js/song';
 export default {
+  data () {
+    return {
+      placeholder: '',
+      isNeedLogin: false,
+      songs: []
+    };
+  },
   created () {
-    console.log('created----');
+    this.getLoginUserInfo();
+    this.searchDefault();
+  },
+  methods: {
+    // 登录显示播放器，未登录显示登录按钮
+    async getLoginUserInfo () {
+      const statusRes = await userApi.getLoginStatusAction();
+      const accountInfo = JSON.parse(sessionStorage.getItem('accountInfo')) || {};
+      if (statusRes.code === 200 && accountInfo.id === statusRes.profile.userId) {
+        this.searchUserPlayList(accountInfo.id);
+      } else {
+        this.isLogin = true;
+      }
+    },
+    // 获取用户播放列表
+    async searchUserPlayList (uid) {
+      const userPlayRes = await searchApi.searchUserRecordAction({ uid });
+      if (userPlayRes.code === 200) {
+        this.songs = _.map(userPlayRes.weekData, (item) => {
+          const song = item.song;
+          return new Song({
+            name: song.name,
+            artist: _.map(song.ar, 'name').slice(0, 3).join('/'),
+            id: song.id,
+            picUrl: song.al.picUrl
+          });
+        });
+        this.setPlayList(this.songs);
+        this.setCurrentIndex(0);
+      }
+    },
+    // 查询默认搜索关键字
+    async searchDefault () {
+      const defaultRes = await searchApi.searchDefaultAction();
+      if (defaultRes.code === 200) {
+        this.placeholder = defaultRes.data.showKeyword;
+      }
+    },
+    ...mapMutations({
+      setPlayList: 'SET_PLAYLIST',
+      setCurrentIndex: 'SET_CURRENT_INDEX'
+    })
   }
-}
+};
 </script>
 <style lang="scss">
-@import 'src/style/mixin';
+@import '~@/common/css/mixin';
 #header-title {
   position: fixed;
-  right: 0;
-  left: 0;
-  border: 1px solid red;
+  top: 0;
+  width: 100%;
   display: flex;
   justify-content: space-between;
+  background: #fff;
   align-items: center;
-  padding: 1.5vh 1vw;
+  height: 60px;
+  padding: 0 5px;
+  z-index: 10;
   .icon-contain {
-    padding-left: 1rem;
+    padding: 0 13px;
+    font-size: 20px;
   }
   .header-search {
+    flex: 1;
     & > input {
-      padding-left: 0.7rem;
-      @include wh(17rem, 2.2rem);
-      border-radius: 6vw;
+      text-align: center;
+      padding-left: 10px;
+      @include wh(100%, 35px);
+      border-radius: 35px;
       outline-style: none;
       border: 0px;
       background-color: #f7f7f7;
@@ -47,9 +103,10 @@ export default {
   }
   .header-img {
     vertical-align: middle;
-    padding-right: 13px;
+    padding: 0 12px;
+    min-width: 56px;
     & > a {
-      font-size: 30px;
+      font-size: 16px;
       color: #666;
     }
   }

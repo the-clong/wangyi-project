@@ -1,5 +1,5 @@
 <template>
-  <div id="singer-detail">
+  <div id="rank-detail">
     <div class="singer-title">
       <div class="icon-back" @click="$router.go(-1)">
         <svg class="svg-icon" aria-hidden="true">
@@ -7,11 +7,11 @@
         </svg>
       </div>
       <div class="title">
-        <h2>{{singerTitle}}</h2>
+        <h2>{{rankTitle}}</h2>
       </div>
     </div>
     <div class="singer-sketch" :style="styleBg">
-      <div class="random-play" ref="randomPlay" v-show="songs.length > 0" @click="randomPlay">
+      <!-- <div class="random-play" ref="randomPlay" v-show="songs.length > 0">
         <div class="icon-play">
           <svg class="svg-icon" aria-hidden="true">
             <use xlink:href="#icon-bofang1"></use>
@@ -20,35 +20,44 @@
         <div class="play-text">
           随机播放全部
         </div>
+      </div> -->
+    </div>
+    <div class="sequence-play">
+      <div class="play-music">
+        <svg class="svg-icon" aria-hidden="true">
+          <use xlink:href="#icon-bofang2"></use>
+        </svg>
       </div>
+      <div>播放全部</div>
+      <div>(共{{songs.length}}首)</div>
     </div>
     <div class="bg-layer" ref="bgLayer">
     </div>
-    <music-list :songs="songs" @musicScroll="musicScroll" @select="selectMusic"></music-list>
+    <music-list :songs="songs" @musicScroll="musicScroll" @select="selectMusic" :isScrollTitle="isScrollTitle"></music-list>
   </div>
 </template>
-<script>
-import $ from 'jquery';
+<script type="text/ecmascript">
 import _ from 'lodash';
+import { mapGetters, mapMutations, mapActions } from 'vuex';
 import Song from '@/common/js/song';
-import * as singer from '@/api/singer';
+import * as rankApi from '@/api/recommend';
 import MusicList from '@/base/music-list';
-import { mapMutations, mapActions, mapGetters } from 'vuex';
 export default {
   components: {
     MusicList
   },
   data () {
     return {
+      rankTitle: '',
       bgImage: '',
-      singerTitle: '',
       minLayerHeight: 0,
       bgImageHeight: 0,
-      songs: []
+      songs: [],
+      isScrollTitle: true
     };
   },
   created () {
-    this.searchSingerDetail();
+    this.initRankDetail();
   },
   computed: {
     ...mapGetters({
@@ -61,13 +70,15 @@ export default {
   mounted () {
     this.bgImageHeight = $('.singer-sketch')[0].clientHeight;
     this.minLayerHeight = $('.singer-title')[0].clientHeight - $('.singer-sketch')[0].clientHeight;
+    // console.log(this.minLayerHeight);
   },
   methods: {
-    async searchSingerDetail () {
-      const detailRes = await singer.searchSingerDetail({ id: this.$route.params.id });
-      this.bgImage = detailRes.artist.picUrl;
-      this.singerTitle = detailRes.artist.name;
-      this.songs = _.map(detailRes.hotSongs, (item, index) => {
+    async initRankDetail () {
+      const res = await rankApi.searchTopListByIdAction(3);
+      const playlist = res.playlist;
+      this.rankTitle = playlist.name;
+      this.bgImage = playlist.coverImgUrl;
+      this.songs = _.map(playlist.tracks, (item, index) => {
         return new Song({
           name: item.name,
           artist: _.map(item.ar, 'name').slice(0, 3).join('/'),
@@ -84,13 +95,13 @@ export default {
       const percent = Math.abs(pos.y / this.bgImageHeight);
       const titleHeight = $('.singer-title')[0].clientHeight;
       const translateY = Math.max(pos.y, this.minLayerHeight);
-      let opacity = 1 - pos.y / (this.minLayerHeight - $('.random-play').position().top);
-      const bottom = Math.max(25, 25 - translateY);
-      if (opacity < 0) {
-        opacity = 0;
-      } else if (opacity > 1) {
-        opacity = 1;
-      }
+      // let opacity = 1 - pos.y / (this.minLayerHeight - $('.random-play').position().top);
+      // const bottom = Math.max(25, 25 - translateY);
+      // if (opacity < 0) {
+      //   opacity = 0;
+      // } else if (opacity > 1) {
+      //   opacity = 1;
+      // }
       // 控制滑动到顶端的边界
       $('.bg-layer').css({
         transform: `translate3d(0,${translateY}px,0)`
@@ -105,25 +116,25 @@ export default {
         height = 0;
         paddingTop = '260px';
         // 计算全部播放按钮的透明度
-        $('.random-play').css('opacity', opacity).css('display', opacity === 0 ? 'none' : '').css('bottom', bottom);
+        // $('.random-play').css('opacity', opacity).css('display', opacity === 0 ? 'none' : '').css('bottom', bottom);
+        if (pos.y > 0) {
+          $('.singer-sketch').css('transform', `scale(${(1 + percent)})`);
+          // $('#music-list').css('top', 300 * (1 + percent) + 'px');
+          $('.sequence-play').css('top', 260 * (1 + percent) + 'px');
+        } else { // 这里是从260到title高度的距离
+          $('.sequence-play').css('top', this.bgImageHeight + pos.y + 'px');
+        }
       }
-      if (pos.y > 0) {
-        zIndex = 10;
-        $('.singer-sketch').css('transform', `scale(${(1 + percent)})`);
-      }
+      // if (pos.y > 0) {
+      //   $('.singer-sketch').css('transform', `scale(${(1 + percent)})`);
+      //   // $('#music-list').css('top', 300 * (1 + percent) + 'px');
+      //   $('.sequence-play').css('top', 260 * (1 + percent) + 'px');
+      // } else {
+      //   console.log('in------');
+      // }
       $('.singer-sketch').css('zIndex', zIndex);
       $('.singer-sketch').css('height', height);
       $('.singer-sketch').css('paddingTop', paddingTop);
-    },
-    randomPlay () {
-      this.setFullScreen(true);
-      this.setPlayState(true);
-      const index = Math.floor(Math.random() * [this.sequenceList.length - 1]);
-      this.setPlayMode({
-        id: this.sequenceList[index].id,
-        mode: 1,
-        playList: this.sequenceList
-      });
     },
     selectMusic (song, index) {
       this.selectPlay({
@@ -141,10 +152,10 @@ export default {
 };
 </script>
 <style lang="scss">
-#singer-detail {
+#rank-detail {
   background-color: #fff;
   position: fixed;
-  z-index: 12;
+  z-index: 15;
   left: 0;
   right: 0;
   top: 0;
@@ -153,7 +164,7 @@ export default {
     position: absolute;
     top: 0;
     width: 100%;
-    z-index: 12;
+    z-index: 17;
     padding: 12px 10px;
     > .icon-back {
       padding: 6px 0;
@@ -207,6 +218,25 @@ export default {
       .play-text {
         font-weight: 600;
         padding: 8px;
+      }
+    }
+  }
+  .sequence-play {
+    position: absolute;
+    display: flex;
+    top: 260px;
+    width: 100%;
+    height: 40px;
+    z-index: 20;
+    align-items: center;
+    background: #f2f3f4;
+    border-bottom: 1px solid #e4e4e4;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    > div {
+      margin-left: 13px;
+      &:last-child {
+        color: #969696;
       }
     }
   }

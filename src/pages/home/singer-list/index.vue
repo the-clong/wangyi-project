@@ -1,5 +1,5 @@
 <template>
-  <div id="singer-list">
+  <div id="singer-list" class="preview-container">
     <Header />
     <list-view :listData="singerList" @select="selectSinger"></list-view>
     <transition name="slide">
@@ -78,7 +78,7 @@ export default {
       this.SET_SINGER(singer);
       this.isSingerList = false;
       this.$router.push({
-        path: `/home/singerList/${singer.id}`
+        path: `/singerList/${singer.id}`
       });
     },
     getPinyinData (word) {

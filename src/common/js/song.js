@@ -4,7 +4,15 @@ export default class Song {
     this.name = name;
     this.picUrl = picUrl;
     this.artist = artist || '';
-    this.playCount = playCount || 0;
+    this.playCount = this.getCountCheck(playCount) || 0;
     this.albumName = albumName || '';
+  }
+
+  getCountCheck (count) {
+    if (count < 10000) {
+      return count;
+    } else {
+      return Math.round(count / 10000) + '万';
+    }
   }
 }

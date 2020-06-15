@@ -1,5 +1,5 @@
 <template>
-  <div id="discover">
+  <div id="discover" class="preview-container">
     <Header />
     <scroll class="discover-scroll" :data="listInitArray">
       <ul class="discover-list">
@@ -81,6 +81,7 @@ export default {
   },
   data () {
     return {
+      test: '',
       bannerList: [],
       iconList: [
         {
@@ -90,12 +91,12 @@ export default {
         },
         {
           icon: 'gedan',
-          path: '',
+          path: '/songSheet',
           title: '歌单'
         },
         {
           icon: 'paihangbang',
-          path: '/home/discover/rank',
+          path: '/rank',
           title: '排行榜'
         },
         {
@@ -119,6 +120,10 @@ export default {
     };
   },
   computed: {
+    debounce () {
+      const self = this;
+      return _.debounce(self.calculateLayout, 500);
+    },
     listInitArray () {
       return [this.rsSongsList.length > 0 && this.srSongsList.length > 0 &&
         this.cjSongsList.length > 0 && this.newSongsList.length > 0 &&
@@ -176,23 +181,19 @@ export default {
       }
     }
   },
-  mounted () {
-
-  },
   methods: {
     async initBannerData () {
       const res = await discover.getBannerList();
       this.bannerList = res.banners;
     },
     async initRecommendSongs () {
-      const self = this;
       const res = await discover.searchRecommandSongsAction({ limit: 6 });
       this.rsSongsList = _.map(res.result, item => {
         return new Song({
           id: item.id,
           name: item.name,
           picUrl: item.picUrl,
-          playCount: self.countCheck(item.playCount)
+          playCount: item.playCount
         });
       });
     },
@@ -253,7 +254,7 @@ export default {
       });
       Promise.all(promiseArr).then(res => {
         this.rankList = _.map(res, item => new Rank({
-          id: item.playlist.id,
+          id: item.playlist && item.playlist.id,
           name: item.playlist.name,
           tracks: item.playlist.tracks.slice(0, 3)
         }));
@@ -261,21 +262,21 @@ export default {
     },
     async initDJProgramList () {
       const res = await discover.searchDJProgram();
-      this.jdProgramList = res.result;
+      this.jdProgramList = _.each(res.result, item => (item.name = item.program.description));
+      console.log(this.jdProgramList);
     },
     initBannerSwiper () {
       this.mySwiper = new Swiper('.banner-container', {
+        resistanceRatio: 0,
         pagination: {
           el: '.swiper-pagination',
+          clickable: true,
           bulletActiveClass: 'banner-bullet-active'
         }
       });
     },
     toggleSongs (currentSlide) {
       this.currentNews = currentSlide;
-    },
-    countCheck (count) {
-      return Math.round(count / 10000);
     },
     goIconPath (path) {
       if (!path) {
@@ -290,8 +291,8 @@ export default {
 };
 </script>
 <style lang="scss">
+@import '~@/common/css/mixin';
 #discover {
-  height: 100%;
   .discover-scroll {
     position: relative;
     overflow-y: hidden;
@@ -346,13 +347,9 @@ export default {
             flex: 1;
             & > .icon-contain {
               margin: 0 auto;
-              width: 47px;
-              height: 47px;
-              line-height: 47px;
+              @include lh(47px,47px,28px);
               border-radius: 50%;
               background-image: linear-gradient(to right, #fe5649, #ff1c13);
-              text-align: center;
-              font-size: 28px;
               color: #fff;
             }
             & > .title-contain {

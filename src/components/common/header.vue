@@ -6,7 +6,7 @@
       </svg>
     </section>
     <section class="header-search">
-      <input :placeholder="placeholder" />
+      <input :placeholder="placeholder" @compositionstart="startChinese" @compositionupdate="updateChinese" @compositionend="endChinese" />
     </section>
     <section class="header-img">
       <a href="/login" v-if="isNeedLogin">登录</a>
@@ -27,10 +27,21 @@ export default {
     };
   },
   created () {
+    console.log(aaa); // 如果此时访问a报错 a is not defined
+    const aaa = 1;
     this.getLoginUserInfo();
     this.searchDefault();
   },
   methods: {
+    startChinese (e) {
+      console.log('start-----');
+    },
+    updateChinese (e) {
+      console.log('update-------');
+    },
+    endChinese (e) {
+      console.log('end-----');
+    },
     // 登录显示播放器，未登录显示登录按钮
     async getLoginUserInfo () {
       const statusRes = await userApi.getLoginStatusAction();
@@ -43,7 +54,8 @@ export default {
     },
     // 获取用户播放列表
     async searchUserPlayList (uid) {
-      const userPlayRes = await searchApi.searchUserRecordAction({ uid });
+      const userPlayRes = await searchApi.searchUserRecordAction({ uid, type: 1 });
+      console.log(userPlayRes);
       if (userPlayRes.code === 200) {
         this.songs = _.map(userPlayRes.weekData, (item) => {
           const song = item.song;
@@ -73,15 +85,12 @@ export default {
 };
 </script>
 <style lang="scss">
-@import '~@/common/css/mixin';
+@import "~@/common/css/mixin";
 #header-title {
   position: fixed;
   top: 0;
   width: 100%;
-  display: flex;
-  justify-content: space-between;
-  background: #fff;
-  align-items: center;
+  @include flexBetween();
   height: 60px;
   padding: 0 5px;
   z-index: 10;

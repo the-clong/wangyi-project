@@ -1,5 +1,6 @@
 import _ from 'lodash';
 // shuffle在lodash里边有，这里就是自己实现以下
+let a = 2;
 export const shuffle = (arr) => {
   const cloneArr = arr.slice(0);
   let len = arr.length;
@@ -11,6 +12,7 @@ export const shuffle = (arr) => {
 };
 // 从总数中筛选多少个不重复的随机数
 export const randomBySum = (num, sum) => {
+  a++;
   const arr = [];
   const resArr = [];
   for (let i = 0; i < sum; i++) {
@@ -28,3 +30,11 @@ export const randomBySum = (num, sum) => {
   }
   return resArr;
 };
+export const aa = () => {
+  return {
+    a
+  }
+};
+const test = require('./test');
+test.getCounter(6);
+console.log(test.counter);

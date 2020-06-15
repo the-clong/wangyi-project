@@ -11,7 +11,7 @@
         </ul>
       </li>
     </ul>
-    <div class="address-slide" @touchmove.stop.prevent="onSlideMove" @touchstart="onSlideStart">
+    <div class="address-slide" @touchmove="onSlideMove" @touchstart.prevent="onSlideStart">
       <ul>
         <li v-for="(item,index) in caculateSlideList" :key="index" :class="{'active': index === activeIndex}" :data-index="index">
           {{item}}

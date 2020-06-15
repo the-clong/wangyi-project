@@ -24,7 +24,9 @@ export default {
   },
   created () {
     const routes = this.$router.options.routes; // 获取所有路由
-    this.footList = _.find(routes, { path: '/home' }).children; // 获取Home路由的子节点
+    console.log(routes);
+    this.footList = routes.slice(0, 5);// _.find(routes, { path: '/' }).children; // 获取Home路由的子节点
+    console.log(this.footList);
   },
   watch: {
     // '$route': function (route) {
@@ -41,7 +43,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-@import '~@/common/css/mixin';
+@import "~@/common/css/mixin";
 #footer-guide {
   width: 100%;
   position: fixed;
@@ -67,6 +69,7 @@ export default {
     padding: 5px;
     display: flex;
     justify-content: space-between;
+    background-color: #fff;
     li {
       flex: 1;
       text-align: center;

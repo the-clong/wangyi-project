@@ -4,10 +4,45 @@
   height: $height;
 }
 
-// 水平垂直都居中并设置字体大小
-@mixin lh($height, $fontSize:1rem) {
+// 设置宽高字体并水平垂直居中
+@mixin lh($width, $height:$width, $fontSize:1rem) {
+  width: $width;
   height: $height;
   line-height: $height;
   font-size: $fontSize;
   text-align: center;
+}
+
+// 设置flex的水平垂直居中
+@mixin flexBetween($bg:#fff) {
+  display: flex;
+  justify-content: space-between;
+  background: $bg;
+  align-items: center;
+}
+
+// 设置position定位和top,left,right,bottom
+@mixin posSite($height: $height, $zIndex: 0, $pos:absolute, $left: 0, $right:0, $top:0) {
+  position: $pos;
+  left: $left;
+  right: $right;
+  top: $top;
+  height: $height;
+  z-index: $zIndex;
+}
+
+@mixin imageContain ($width, $height) {
+  position: relative;
+  width: $width;
+  height: $height;
+  border-radius: 8px;
+  overflow: hidden;
+
+  >.text {
+    position: absolute;
+    left: 5px;
+    bottom: 5px;
+    color: #fff;
+    font-size: 14px;
+  }
 }

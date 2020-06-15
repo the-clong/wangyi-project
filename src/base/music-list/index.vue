@@ -1,10 +1,10 @@
 <template>
-  <scroll id="music-list" :listenScroll="listenScroll" :probeType="probeType" @scroll="scrollList" :data="songs">
+  <scroll id="music-list" :listenScroll="listenScroll" :probeType="probeType" @scroll="scrollList" :data="songs" :style="getTop">
     <ul class="song-list">
       <li class="song-item" v-for="(song,index) in songs" :key="index" @click="selectSong(song,index)">
         <div class="song-num">{{index + 1}}</div>
         <div class="song-info">
-          <h3 class="song-name">
+          <h3 class="song-name ellipsis">
             {{song.name}}
           </h3>
           <p>{{song.artist}}</p>
@@ -20,6 +20,10 @@ export default {
     Scroll
   },
   props: {
+    isScrollTitle: {
+      type: Boolean,
+      default: false
+    },
     songs: {
       type: Array,
       default: function () {
@@ -32,6 +36,11 @@ export default {
       listenScroll: true,
       probeType: 3
     };
+  },
+  computed: {
+    getTop () {
+      return `top: ${this.isScrollTitle ? '300px' : '260px'}`;
+    }
   },
   methods: {
     scrollList (pos) {
@@ -49,7 +58,7 @@ export default {
   background: #f2f3f4;
   position: fixed;
   /* overflow-y: hidden; */
-  top: 70vw;
+  /* top: 300px; */
   bottom: 0;
   width: 100%;
   .song-list {
@@ -59,7 +68,7 @@ export default {
       display: flex;
       height: 70px;
       align-items: center;
-      border-bottom: 1px solid #969696;
+      border-bottom: 1px solid #e4e4e4;
       & > .song-num {
         width: 3rem;
         text-align: center;
@@ -69,9 +78,6 @@ export default {
         flex: 1;
         .song-name {
           width: 20rem;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
           color: #2e3030;
         }
         p {

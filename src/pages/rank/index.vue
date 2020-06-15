@@ -1,6 +1,6 @@
 <template>
   <div id="recommend">
-    <div class="recommend-header">
+    <!-- <div class="recommend-header">
       <div class="back" @click="goBack">
         <svg class="svg-icon" aria-hidden="true">
           <use xlink:href="#icon-fanhui"></use>
@@ -9,17 +9,18 @@
       <div class="title">
         <h2>排行榜</h2>
       </div>
-    </div>
+    </div> -->
+    <two-header title="排行榜"></two-header>
     <div class="recommend-container">
       <ul class="offical-list" v-if="officalList.length > 0">
         <h2>官方榜</h2>
-        <li v-for="(item,index) in officalList" :key="index" class="offical-item">
+        <li v-for="(item,index) in officalList" :key="index" class="offical-item" @click="goRecmdDetail(item.id)">
           <div class="image-contain">
             <div class="text">{{item.updateFrequency}}</div>
             <img v-lazy="item.coverImgUrl" width="120" height="120" />
           </div>
           <ul class="info">
-            <li class="info-item" v-for="(itemInfo,index1) in item.tracks" :key="index1">
+            <li class="info-item ellipsis" v-for="(itemInfo,index1) in item.tracks" :key="index1">
               <span>{{index1 + 1}}.</span>
               <span>{{itemInfo.first}} - {{itemInfo.second.substring(0,1)}}</span>
             </li>
@@ -37,11 +38,16 @@
         </li>
       </ul>
     </div>
+    <router-view></router-view>
   </div>
 </template>
 <script>
 import * as recommendApi from '@/api/recommend';
+import twoHeader from '@/components/common/twoHeader';
 export default {
+  components: {
+    twoHeader
+  },
   data () {
     return {
       officalList: [], // 官方榜
@@ -67,29 +73,28 @@ export default {
     },
     goBack () {
       this.$router.go(-1);
+    },
+    goRecmdDetail (id) {
+      this.$router.push({
+        path: `/rank/${id}`
+      });
     }
   }
 };
 </script>
 <style lang="scss">
+@import '~@/common/css/mixin';
+@import '~@/common/css/common';
 #recommend {
   background: #fff;
-  position: fixed;
-  top: 0;
-  width: 100%;
-  left: 0;
-  bottom: 65px;
-  z-index: 12;
+  @include posSite(calc(100% - 65px),0,fixed,0,0,0);
   .recommend-header {
-    z-index: 20;
+    z-index: 13;
     background: #fff;
-    position: fixed;
-    top: 0;
-    left: 0;
     width: 100%;
     display: flex;
-    height: 60px;
     align-items: center;
+    @include posSite(60px,0,fixed,0,0,0);
     > .back {
       padding: 5px;
       font-size: 28px;
@@ -106,7 +111,7 @@ export default {
   .recommend-container {
     height: 100%;
     overflow-y: auto;
-    padding-top: 60px;
+    margin-top: 60px;
     .offical-list {
       > h2 {
         font-weight: 500;
@@ -116,28 +121,14 @@ export default {
         display: flex;
         align-items: center;
         padding: 5px 10px;
-        > .image-contain {
-          position: relative;
-          width: 120px;
-          height: 120px;
-          border-radius: 8px;
-          overflow: hidden;
-          > .text {
-            position: absolute;
-            left: 5px;
-            bottom: 5px;
-            color: #fff;
-            font-size: 14px;
-          }
+        .image-contain {
+          @include imageContain(120px,120px);
         }
         > .info {
           flex: 1;
           padding-left: 17px;
           overflow: hidden;
           .info-item {
-            text-overflow: ellipsis;
-            overflow: hidden;
-            white-space: nowrap;
             line-height: 35px;
           }
         }
@@ -155,18 +146,7 @@ export default {
         padding-top: 10px;
         vertical-align: top;
         > .image-contain {
-          position: relative;
-          width: 110px;
-          height: 110px;
-          border-radius: 8px;
-          overflow: hidden;
-          > .text {
-            position: absolute;
-            left: 5px;
-            bottom: 5px;
-            color: #fff;
-            font-size: 14px;
-          }
+          @include imageContain(110px,110px);
         }
         > .item-name {
           max-width: 110px;

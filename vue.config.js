@@ -2,6 +2,8 @@ const webpack = require('webpack')
 const path = require('path')
 // const zopfli = require("@gfx/zopfli");//zopfli压缩
 // const { SkeletonPlugin } = require('page-skeleton-webpack-plugin')
+//引入插件
+const SkeletonWebpackPlugin = require('vue-skeleton-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const CompressionPlugin = require('compression-webpack-plugin') // Gzip
 const productionGzipExtensions = /\.(js|css|json|txt|html|ico|svg)(\?.*)?$/i
@@ -86,6 +88,15 @@ module.exports = {
     //     routes: ['/', '/search'], // 将需要生成骨架屏的路由添加到数组中
     //   })
     // )
+    config.plugins.push(new SkeletonWebpackPlugin({
+			webpackConfig: {
+				entry: {
+					app: path.join(__dirname, './src/skeleton.js'),
+				},
+			},
+			minimize: true,
+			quiet: true,
+		}));
     if (isProduction) {
       config.plugins.push(
         new CompressionPlugin({
@@ -95,7 +106,17 @@ module.exports = {
           },
           minRatio: 0.8,
           test: productionGzipExtensions
-        }),
+        })
+      )
+      config.plugins.push(
+        new CompressionPlugin({
+          algorithm: 'gzip',
+          compressionOptions: {
+            numiterations: 15
+          },
+          minRatio: 0.8,
+          test: productionGzipExtensions
+        })
       )
       // 警告 webpack 的性能提示
       config.performance = {
@@ -127,10 +148,16 @@ module.exports = {
       )
     }
   },
+  //这个是让骨架屏的css分离，直接作为内联style处理到html里，提高载入速度
+	css: {
+		extract: true,
+		sourceMap: false,
+		modules: false
+	},
   chainWebpack (config) {
     // config.resolve.symlinks(true);
     // config.plugins.delete('preload') // TODO: need test
-    // config.plugins.delete('prefetch') // TODO: need test
+    config.plugins.delete('prefetch') // TODO: need test
     // set preserveWhitespace
     config.module
       .rule('vue')

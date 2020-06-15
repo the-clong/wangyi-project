@@ -10,7 +10,7 @@
             </svg>
           </div>
         </div>
-        <div class="item-title">{{item.program.name}}</div>
+        <div class="item-title ellipsis">{{item.program.name}}</div>
         <div class="item-text">{{item.program.radio.desc}}</div>
       </li>
     </ul>
@@ -75,11 +75,8 @@ export default {
         }
       }
       .item-title {
-        overflow: hidden;
         font-size: 15px;
         text-align: left;
-        white-space: nowrap;
-        text-overflow: ellipsis;
         padding: 6px 0;
         color: #333334;
       }

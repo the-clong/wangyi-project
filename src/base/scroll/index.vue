@@ -51,7 +51,7 @@ export default {
       type: Boolean,
       default: true
     },
-    // 数据加载完成
+    // 用于一开始未出现的listscroll，出现之后为true
     isListInit: {
       type: Boolean,
       default: false
@@ -77,7 +77,9 @@ export default {
     },
     data: {
       type: Array,
-      default: null
+      default: function () {
+        return [];
+      }
     }
   },
   data () {
@@ -95,27 +97,26 @@ export default {
   watch: {
     isListInit: function (isListInit) {
       // 当页面DOM渲染完成初始化scroll组件
-      if (isListInit) {
-        this.$nextTick(() => {
-          this.initScroll();
-        });
-      }
+      // isListInit由true变成false
+      this.$nextTick(() => {
+        this.initScroll();
+      });
     },
     data () {
       setTimeout(() => {
         this.refreshScroll();
       }, this.refreshDelay);
+    },
+    inPullDown: function(inPullDown) {
+      console.log(inPullDown);
     }
   },
   mounted () {
-    // this.$nextTick(() => {
-    //   console.log(this.$refs.wrapper);
-    //   this.initScroll();
-    // });
-    setTimeout(() => {
-      this.initScroll();
-    });
-    // console.log(window.navigator.appVersion);
+    if (!this.isListInit) {
+      setTimeout(() => {
+        this.initScroll();
+      }, 300);
+    }
   },
   methods: {
     initScroll () {
@@ -180,10 +181,14 @@ export default {
       this.scroll && this.scroll.enable();
     },
     finishPullDown () {
-      this.scroll && this.scroll.finishPullDown();
+      if (this.pulldown) {
+        this.scroll && this.scroll.finishPullDown();
+      }
     },
     finishPullUp () {
-      this.scroll && this.scroll.finishPullUp();
+      if (this.pullup) {
+        this.scroll && this.scroll.finishPullUp();
+      }
     }
   }
 };

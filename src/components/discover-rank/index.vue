@@ -10,11 +10,11 @@
                 <img :src="song.avater" />
               </div>
               <div class="slide-info">
-                <div class="info-title">
+                <div class="info-title ellipsis">
                   {{song.name}}
                 </div>
                 <div class="divide"></div>
-                <div class="info-artist">{{song.singerName}}</div>
+                <div class="info-artist ellipsis">{{song.singerName}}</div>
               </div>
               <!-- <div class="icon-contain">
                 <svg class="svg-icon" aria-hidden="true">
@@ -109,17 +109,11 @@ export default {
             max-width: 240px;
             & > .info-title {
               max-width: 120px;
-              overflow: hidden;
-              text-overflow: ellipsis;
-              white-space: nowrap;
               color: black;
               margin-right: 10px;
               font-size: 18px;
             }
             & > .info-artist {
-              overflow: hidden;
-              text-overflow: ellipsis;
-              white-space: nowrap;
               padding: 8px 0;
               color: #959595;
               &::before {

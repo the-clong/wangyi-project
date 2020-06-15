@@ -107,7 +107,7 @@ export default {
   },
   data () {
     return {
-      isListInit: false,
+      isListInit: true,
       audioUrl: '', // audio播放地址
       updateTime: 0, // audio的播放时间
       songReady: true, // audio是否准备好
@@ -148,10 +148,10 @@ export default {
   },
   watch: {
     fullScreen: function (fullScreen) {
-      this.isListInit = fullScreen;
+      this.isListInit = !fullScreen;
     },
     currentSong: function (newSong, oldSong) {
-      this.isListInit = false;
+      // this.isListInit = false;
       if (newSong.id !== oldSong.id) {
         this.searchMusicSong({ id: newSong.id });
         this.searchMusicLyric({ id: newSong.id });
@@ -188,9 +188,9 @@ export default {
         if (this.playState) {
           this.currentLyric.play();
         }
-        if (this.fullScreen) {
-          this.isListInit = true;
-        }
+        // if (this.fullScreen) {
+        //   this.isListInit = true;
+        // }
       }
     },
     handleLyric ({ lineNum, txt }) {

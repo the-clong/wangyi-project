@@ -1,3 +1,6 @@
+const login = r => require.ensure([], () => r(require('@/pages/login')), 'login');
+const phoneLogin = r => require.ensure([], () => r(require('@/pages/login/phone')), 'phoneLogin');
+const _404 = r => require.ensure([], () => r(require('@/pages/_404')), '_404');
 // 常用的路由，包括login,404,home等等
 export default [
   {
@@ -6,7 +9,7 @@ export default [
     meta: {
       title: '登录'
     },
-    component: () => import('@/pages/login')
+    component: login
   },
   {
     name: 'phone-login',
@@ -14,18 +17,19 @@ export default [
     meta: {
       title: '手机登录'
     },
-    component: () => import('@/pages/login/phone')
+    component: phoneLogin
   },
   {
     path: '/',
     redirect: '/login'
   },
-  {
-    path: '/test',
-    component: () => import('@/pages/test')
-  },
+  // {
+  //   path: '/test',
+  //   component: () => import(/* webpackChunkName: "test" */'@/pages/test')
+  // },
   {
     path: '*',
-    components: () => import('@/pages/_404')
+    name: '_404',
+    component: _404
   }
 ];

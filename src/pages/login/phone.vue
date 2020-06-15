@@ -72,7 +72,7 @@ export default {
       if (res.code === 200 && res.loginType) {
         this.setUserInfo(res).then(() => {
           this.$router.push({
-            path: '/home'
+            path: '/discover'
           });
         });
       } else {
@@ -84,7 +84,7 @@ export default {
 };
 </script>
 <style lang="scss">
-@import '~@/common/css/mixin';
+@import "~@/common/css/mixin";
 #login-phone {
   padding: 10px 15px;
   .number-container {
@@ -110,7 +110,7 @@ export default {
     .login-btn {
       margin-top: 1rem;
       width: 100%;
-      @include lh(2.8rem, 1.2rem);
+      @include lh(100%, 2.8rem, 1.2rem);
       display: block;
       background-image: linear-gradient(to right, #ff594b, #ff1d11);
       border-radius: 1.5rem;

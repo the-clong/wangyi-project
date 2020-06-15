@@ -121,8 +121,6 @@ export default {
         .icon-contain {
           border-radius: 50%;
           @include lh(35px);
-          text-align: center;
-          width: 35px;
           color: red;
           border: 1px solid #e5e5e5;
         }

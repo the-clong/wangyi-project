@@ -79,7 +79,7 @@ export default {
         float: right;
         border-radius: 40px;
         border: 1px solid #e6e6e6;
-        @include lh(1.8rem);
+        @include lh(95px,28px);
         width: 6rem;
       }
     }

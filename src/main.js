@@ -3,12 +3,11 @@ import service from './utils/fetch';
 import App from './App';
 import _ from 'lodash';
 import './assets/iconfont/iconfont'; // 加载svg的js文件
-import fastclick from 'fastclick';
+// import fastclick from 'fastclick';
 import VueLazyload from 'vue-lazyload';
 import router from './router';
 import store from './store';
-import Cookie from 'js-cookie';
-fastclick.attach(document.body);
+// fastclick.attach(document.body);
 Vue.prototype.$http = service;
 Vue.config.productionTip = false;
 Vue.use(VueLazyload, {
@@ -26,7 +25,7 @@ router.beforeEach((to, from, next) => {
     }
   } else if (store.state.Token && (to.fullPath === '/login' || to.fullPath === '/phoneLogin')) { // 如果是已经登录的
     next({
-      path: '/home'
+      path: '/discover'
     });
   } else {
     next();

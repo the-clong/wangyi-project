@@ -15,7 +15,6 @@ export default new VueRouter({
     if (savedPosition) {
       return savedPosition;
     } else {
-      console.log(document.body.scrollTop);
       if (from.meta.keepAlive) {
         from.meta.savedPosition = document.documentElement.scrollTop || document.body.scrollTop;
       }

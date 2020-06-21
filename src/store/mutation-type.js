@@ -1,0 +1,14 @@
+export const SET_USER_TOKEN = 'SET_USER_TOKEN';
+export const USER_LOGOUT = 'USER_LOGOUT';
+export const SET_SINGER = 'SET_SINGER';// 当前歌手
+export const SET_PLAYLIST = 'SET_PLAYLIST';// 设置歌曲列表
+export const SET_SEQUENCE_LIST = 'SET_SEQUENCE_LIST';// 设置顺序歌曲列表
+export const SET_CURRENT_INDEX = 'SET_CURRENT_INDEX';// 设置当前歌曲
+export const SET_FULLSCREEN = 'SET_FULLSCREEN';// 设置是否全屏
+export const SET_PLAY_STATE = 'SET_PLAY_STATE';// 设置播放状态
+export const SET_PLAY_MODE = 'SET_PLAY_MODE';// 设置播放模式
+export const SET_CAT_LIST = 'SET_CAT_LIST';// 设置所有歌单类别
+export const SET_USER_CAT_LIST = 'SET_USER_CAT_LIST';// 设置用户歌单类别
+export const SET_CATEGORIES = 'SET_CATEGORIES';// 设置总的类别
+export const CHANGE_CAT_LIST = 'CHANGE_CAT_LIST';// 改变所有类别的
+export const CHANGE_USER_CAT_LIST = 'CHANGE_USER_CAT_LIST';// 设置总的类别

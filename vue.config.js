@@ -1,6 +1,9 @@
 const webpack = require('webpack')
 const path = require('path')
 // const zopfli = require("@gfx/zopfli");//zopfli压缩
+// const { SkeletonPlugin } = require('page-skeleton-webpack-plugin')
+//引入插件
+const SkeletonWebpackPlugin = require('vue-skeleton-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const CompressionPlugin = require('compression-webpack-plugin') // Gzip
 const productionGzipExtensions = /\.(js|css|json|txt|html|ico|svg)(\?.*)?$/i
@@ -26,7 +29,7 @@ module.exports = {
         plugins: [
           require('postcss-px-to-viewport')({
             unitToConvert: 'px',
-            viewportWidth: 750,
+            viewportWidth: 375,
             unitPrecision: 3,
             viewportUnit: 'vw',
             fontViewportUnit: 'vw',
@@ -38,7 +41,7 @@ module.exports = {
     }
   },
   devServer: {
-    port: 8008, // 端口号
+    port: 8088, // 端口号
     host: 'localhost',
     https: false, // https:{type:Boolean}
     open: false, // 配置自动启动浏览器
@@ -46,29 +49,30 @@ module.exports = {
     // proxy: 'http://localhost:4000' // 配置跨域处理,只有一个代理
     proxy: {
       '/base-api': {
-        target: 'https://www.runoob.com',
+        // target: 'https://www.runoob.com',
+        target: 'http://localhost:3000',
         changeOrigin: true,
         pathRewrite: {
           '^/base-api': ''   //相当于取代了项目名
         }
       },
-      '/login-api': {
-        target: process.env.VUE_APP_LOGIN_API,
-        changeOrigin: true,
-        pathRewrite: {
-          '^/login-api': ''
-        }
-      }
+      // '/login-api': {
+      //   target: process.env.VUE_APP_LOGIN_API,
+      //   changeOrigin: true,
+      //   pathRewrite: {
+      //     '^/login-api': ''
+      //   }
+      // }
     } // 配置多个代理
   },
   configureWebpack: (config) => {
     config.resolve.alias = {
       '@': resolve('src') // 将@路径写活，基于根路径
-    };
+    }
     config.externals = {
-      // 'echarts': 'echarts',
+      'echarts': 'echarts',
       'Swiper': 'Swiper'
-    };
+    }
     config.plugins.push(
       new webpack.ProvidePlugin({
         $: 'jquery',
@@ -76,7 +80,23 @@ module.exports = {
         'windows.jQuery': 'jquery',
         Popper: ['popper.js', 'default']
       })
-    );
+    )
+    // config.plugins.push(
+    //   new SkeletonPlugin({
+    //     pathname: path.resolve(__dirname, './shell'), // 用来存储 shell 文件的地址
+    //     staticDir: path.resolve(__dirname, './dist'), // 最好和 `output.path` 相同
+    //     routes: ['/', '/search'], // 将需要生成骨架屏的路由添加到数组中
+    //   })
+    // )
+    config.plugins.push(new SkeletonWebpackPlugin({
+			webpackConfig: {
+				entry: {
+					app: path.join(__dirname, './src/skeleton.js'),
+				},
+			},
+			minimize: true,
+			quiet: true,
+		}));
     if (isProduction) {
       config.plugins.push(
         new CompressionPlugin({
@@ -87,7 +107,17 @@ module.exports = {
           minRatio: 0.8,
           test: productionGzipExtensions
         })
-      );
+      )
+      config.plugins.push(
+        new CompressionPlugin({
+          algorithm: 'gzip',
+          compressionOptions: {
+            numiterations: 15
+          },
+          minRatio: 0.8,
+          test: productionGzipExtensions
+        })
+      )
       // 警告 webpack 的性能提示
       config.performance = {
         hints: 'warning',
@@ -118,10 +148,16 @@ module.exports = {
       )
     }
   },
+  //这个是让骨架屏的css分离，直接作为内联style处理到html里，提高载入速度
+	css: {
+		extract: true,
+		sourceMap: false,
+		modules: false
+	},
   chainWebpack (config) {
     // config.resolve.symlinks(true);
     // config.plugins.delete('preload') // TODO: need test
-    // config.plugins.delete('prefetch') // TODO: need test
+    config.plugins.delete('prefetch') // TODO: need test
     // set preserveWhitespace
     config.module
       .rule('vue')
@@ -131,17 +167,20 @@ module.exports = {
         options.compilerOptions.preserveWhitespace = true
         return options
       })
-      .end();
-
+      .end()
     config
       // https://webpack.js.org/configuration/devtool/#development
       .when(process.env.NODE_ENV === 'development',
         config => config.devtool('cheap-source-map')
-      );
+      )
 
     config
       .when(process.env.NODE_ENV !== 'development',
         config => {
+          config.plugin('html').tap(opts => {
+            opts[0].minify.removeComments = false
+            return opts
+          })
           config
             .plugin('ScriptExtHtmlWebpackPlugin')
             .after('html')
@@ -149,7 +188,7 @@ module.exports = {
               // `runtime` must same as runtimeChunk name. default is `runtime`
               inline: /runtime\..*\.js$/
             }])
-            .end();
+            .end()
           config
             .optimization.splitChunks({
               chunks: 'all',
@@ -173,9 +212,9 @@ module.exports = {
                   reuseExistingChunk: true
                 }
               }
-            });
+            })
           config.optimization.runtimeChunk('single')
         }
-      );
+      )
   }
-};
+}

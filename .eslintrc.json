@@ -1,0 +1,75 @@
+{
+  "env": {
+    "es6": true,
+    "browser": true,
+    "node": true,
+    "amd": true,
+    "mocha": true,
+    "protractor": true
+  },
+  "globals": {
+    "G": true,
+    "_": true,
+    "APP_CONFIG": true,
+    "jQuery": true,
+    "_config_": true
+  },
+  "parser": "babel-eslint",
+  "rules": {
+    "no-console": 0,
+    // Variables
+    "no-unused-vars": 0,
+    // Stylistic Issues
+    "brace-style": [2, "1tbs", {
+      "allowSingleLine": true
+    }], //大括号风格
+    "comma-style": [2, "last"], //逗号风格
+    "consistent-this": [2, "self"], //当获取当前环境的this是用一样的风格
+    "eol-last": 0, //文件以换行符结束
+    "func-names": 0, //函数表达式必须有名字
+    "indent": [2, 2],
+    "key-spacing": [2, {
+      "beforeColon": false,
+      "afterColon": true
+    }], //对象字面量中冒号的前后空格
+    "max-depth": [2, 7], //嵌套块深度
+    "max-nested-callbacks": [2, 3], //回调嵌套深度
+    "max-params": [2, 6], //函数最多能有多少个参数
+    "new-cap": 0, //构造函数名字首字母要大写
+    "new-parens": 2, //new时构造函数必须有小括号
+    "no-constant-condition": 0, //条件语句的条件中不允许出现恒定不变的量
+    "no-lonely-if": 2, //不允许else语句内只有if语句
+    "no-mixed-spaces-and-tabs": 2, //不允许混用tab和空格
+    "no-multiple-empty-lines": [2, {
+      "max": 2,
+      "maxEOF": 1
+    }], //空行最多不能超过两行
+    "no-trailing-spaces": 2, //一行最后不允许有空格
+    "padded-blocks": [2, "never"], //块内行首行尾是否空行
+    "quote-props": [0, "consistent", {
+      "keywords": true
+    }], //对象字面量中属性名加引号
+    "semi-spacing": [2, {
+      "before": false,
+      "after": true
+    }], //分后前后空格
+    "semi": [2, "always"], //强制语句分号结尾
+    "space-before-blocks": [2, "always"], //块前的空格
+    "space-before-function-paren": [2, {
+      "anonymous": "always",
+      "named": "never"
+    }], //函数定义时括号前的空格
+    "space-infix-ops": 2, //操作符周围的空格
+    "space-unary-ops": [1, {
+      "words": true,
+      "nonwords": false
+    }] //一元运算符前后不要加空格
+  },
+  "extends": [
+    "eslint:recommended"
+  ],
+  "prefer-const": ["error", {
+    "destructuring": "any",
+    "ignoreReadBeforeAssign": false
+  }]
+}

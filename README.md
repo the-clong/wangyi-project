@@ -4,6 +4,11 @@
 ```
 npm install
 ```
+## Clone NeteaseCloudMusicApi
+```
+git clone git@github.com:Binaryify/NeteaseCloudMusicApi.git
+npm install
+```
 ## Project start serve
 ```
 cd NeteaseCloudMusicApi

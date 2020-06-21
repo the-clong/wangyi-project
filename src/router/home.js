@@ -1,6 +1,7 @@
 const discover = r => require.ensure([], () => r(require('@/pages/home/discover')), 'discover');
 const rank = r => require.ensure([], () => r(require('@/pages/rank')), 'rank');
 const songSheet = r => require.ensure([], () => r(require('@/pages/song-sheet')), 'songSheet');
+const sheetCategory = r => require.ensure([], () => r(require('@/pages/song-sheet/category')), 'sheetCategory');
 const rankDetail = r => require.ensure([], () => r(require('@/pages/rank/detail')), 'rankDetail');
 const videoList = r => require.ensure([], () => r(require('@/pages/home/videolist')), 'videoList');
 const profile = r => require.ensure([], () => r(require('@/pages/profile')), 'profile');
@@ -20,15 +21,16 @@ export default [
     path: '/discover',
     component: discover,
     meta: {
+      requireAuth: true,
       icon: 'faxian',
       title: '发现',
-      requireAuth: true,
       keepAlive: true
     }
   },
   {
     path: '/videolist',
     meta: {
+      requireAuth: true,
       icon: 'shipin',
       title: '视频'
     },
@@ -37,6 +39,7 @@ export default [
   {
     path: '/profile',
     meta: {
+      requireAuth: true,
       icon: 'profile',
       title: '我的'
     },
@@ -48,6 +51,7 @@ export default [
     meta: {
       icon: 'pengyou1',
       title: '歌手',
+      requireAuth: true,
       keepAlive: true
     },
     children: [
@@ -61,6 +65,7 @@ export default [
     path: '/account',
     component: account,
     meta: {
+      requireAuth: true,
       icon: 'zhanghao',
       title: '账号'
     }
@@ -79,7 +84,13 @@ export default [
   {
     // 歌单
     path: '/songSheet',
-    component: songSheet
+    component: songSheet,
+    children: [
+      {
+        path: '/songSheet/category',
+        component: sheetCategory
+      }
+    ]
   }
 ];
 //   }

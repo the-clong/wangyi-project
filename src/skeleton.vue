@@ -11,7 +11,7 @@
 export default {
   name: 'skeleton',
   watch: {
-    '$route': {
+    $route: {
       handler: function () {
         console.log('watch-------');
       },

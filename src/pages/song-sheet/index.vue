@@ -1,7 +1,12 @@
 <template>
   <div id="song-sheet" class="preview-container">
     <two-header title="歌单广场"></two-header>
-    <swipe-slide :tags="catUserList" :swiperList="sheetSwiperList" :isPulldown="isPulldown" :isPullup="isPullup" @searchSlideList="initRecoSongSheet" ref="swipeSlide">
+    <swipe-slide :tags="userCatList" :swiperList="sheetSwiperList" :isPulldown="isPulldown" :isPullup="isPullup" @searchSlideList="initRecoSongSheet" ref="swipeSlide">
+      <div class="classify" slot="classify" @click="goSheetCategory">
+        <svg class="svg-icon" aria-hidden="true">
+          <use xlink:href="#icon-leimu"></use>
+        </svg>
+      </div>
       <div class="sheet-banner swiper-container" v-show="sheetBanner.length > 0 && currentTag === 0" slot="other-slide">
         <div class="swiper-wrapper">
           <div class="swiper-slide" v-for="item in sheetBanner" :key="item.id">
@@ -19,11 +24,15 @@
           <!-- <div class="mask"></div> -->
         </div>
       </div>
-      <img-item slot-scope="props" slot="slide-items" :playItem="props.item"></img-item>
+      <img-item slot-scope="props" slot="slide-items" :playItem="props.item" :showPlayNum="showPlayNum"></img-item>
     </swipe-slide>
+    <transition name="slide-fade">
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
 <script>
+import { mapActions, mapGetters } from 'vuex';
 import Swiper from 'Swiper';
 import imgItem from '@/base/img-item';
 import Song from '@/common/js/song';
@@ -36,6 +45,7 @@ export default {
   },
   data () {
     return {
+      showPlayNum: true, // 是否展示playNum
       limit: 18, // 每页条数
       currentTag: -1, // 当前点击的tag
       sheetX: true,
@@ -45,12 +55,13 @@ export default {
       currentIndex: -1, // banner的activeIndex
       sheetBanner: [], // 歌单的滑动banner
       catUserList: [], // 自己的类别
-      catAllList: [], // 所有类别，弹出展示
       sheetSwiperList: [] // 歌单列表的swiper
     };
   },
   computed: {
-
+    ...mapGetters({
+      userCatList: 'userCatList'
+    })
   },
   watch: {
     'sheetBanner.length': function (len) {
@@ -64,6 +75,11 @@ export default {
     this.initCatAllList();
   },
   methods: {
+    goSheetCategory () {
+      this.$router.push({
+        path: '/songSheet/category'
+      });
+    },
     initSheetSwiper () {
       const self = this;
       this.mySwiper = new Swiper('.sheet-banner', {
@@ -106,21 +122,17 @@ export default {
     },
     async initCatAllList () {
       const res = await discover.getCategoryList();
-      this.catUserList = res.sub.slice(0, 7);
-      const recommendItem = _.clone(this.catUserList[0]);
-      recommendItem.name = '推荐';
-      this.catUserList.unshift(recommendItem);
-      this.catUserList.forEach(item => { item.offset = 0; });
-      const len = this.catUserList.length;
+      this.setSheetCatList(res);
+      const len = this.userCatList.length;
       this.sheetSwiperList = Array.from({ length: len }, item => []);
       this.initRecoSongSheet({ isDown: true, current: 0 });
     },
     async initRecoSongSheet (obj) {
       const { isDown, current, isPull } = obj;
       const pageParam = {
-        offset: this.catUserList[current].offset,
+        offset: this.userCatList[current].offset,
         limit: this.limit,
-        cat: current === 0 ? '全部' : this.catUserList[current].name
+        cat: current === 0 ? '全部' : this.userCatList[current].name
       };
       // 一上来是全部歌单
       if (current !== this.currentTag) {
@@ -145,10 +157,11 @@ export default {
           currentSwiperList.splice(pageParam.offset, 0, ...datas);
           this.$set(this.sheetSwiperList, current, currentSwiperList);
         }
-        this.catUserList[current].offset += this.limit;
+        this.userCatList[current].offset += this.limit;
         this.$refs.swipeSlide.pullScroll({ isDown });
       }
-    }
+    },
+    ...mapActions(['setSheetCatList'])
   }
 };
 </script>
@@ -156,6 +169,19 @@ export default {
 @import '~@/common/css/mixin';
 #song-sheet {
   height: 100%;
+  #scroll-swipe {
+    position: relative;
+    .classify {
+      position: absolute;
+      right: 0;
+      top: 0;
+      background: #fff;
+      font-size: 20px;
+      padding: 7px 5px;
+      z-index: 10;
+      box-shadow: -15px 0 25px #fff;
+    }
+  }
   .sheet-banner {
     width: 375px;
     position: relative;
@@ -193,26 +219,12 @@ export default {
       }
     }
   }
-  .scroll-sheet-tags {
-    position: relative;
-    overflow-x: hidden;
-    width: 100%;
-    border-bottom: 1px solid #eaeaea;
-    ul {
-      white-space: nowrap; //元素不换行
-      width: fit-content;
-      & > li {
-        font-size: 17px;
-        font-weight: 430;
-        display: inline-block;
-        color: black;
-        padding: 10px 8px;
-        &.active {
-          color: #ff3a3b;
-          border-bottom: 2px solid #e63432;
-        }
-      }
-    }
+  .slide-fade-enter-active, .slide-fade-leave-active {
+    transition: all 0.4s ease;
+  }
+  .slide-fade-enter,
+  .slide-fade-leave-to {
+    transform: translateX(100%);
   }
 }
 </style>

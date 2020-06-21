@@ -12,7 +12,14 @@ export const playMode = state => state.playMode;
 
 export const currentIndex = state => state.currentIndex;
 
+export const categories = state => state.categories;
+
+export const userCatList = state => state.userCatList.map((item, index) => {
+  item.offset = 0;
+  return item;
+});
+
 export const currentSong = (state) => {
   return state.playList[state.currentIndex] || {};
-}
-  ;
+};
+export const sheetCatList = (state) => state.catList;

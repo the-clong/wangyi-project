@@ -33,8 +33,5 @@ export const randomBySum = (num, sum) => {
 export const aa = () => {
   return {
     a
-  }
+  };
 };
-const test = require('./test');
-test.getCounter(6);
-console.log(test.counter);

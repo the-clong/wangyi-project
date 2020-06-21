@@ -4,10 +4,15 @@
 ```
 npm install
 ```
-
-### Compiles and hot-reloads for development
+## Project start serve
 ```
-npm run serve
+cd NeteaseCloudMusicApi
+
+node app.js
+```
+## Run Project
+```
+npm run dev
 ```
 
 ### Compiles and minifies for production
@@ -15,17 +20,11 @@ npm run serve
 npm run build
 ```
 
-### Run your tests
-```
-npm run test
-```
-
 ### Lints and fixes files
 ```
 npm run lint
 ```
 ##  All Function
-***
 ### Ready Todo
 - [ ] 视频列表播放  
 - [ ] 歌单分类筛选  
@@ -34,6 +33,7 @@ npm run lint
 - [ ] 排行榜列表
 - [ ] 搜索功能和搜索提示
 ### Compeleted
+- [x] 登录功能
 - [x] 发现首页展示
 - [x] 歌手列表代替云村
 - [x] 视频列表展示

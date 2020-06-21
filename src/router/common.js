@@ -23,10 +23,10 @@ export default [
     path: '/',
     redirect: '/login'
   },
-  // {
-  //   path: '/test',
-  //   component: () => import(/* webpackChunkName: "test" */'@/pages/test')
-  // },
+  {
+    path: '/test',
+    component: () => import(/* webpackChunkName: "test" */'@/pages/test')
+  },
   {
     path: '*',
     name: '_404',

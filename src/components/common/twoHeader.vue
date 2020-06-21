@@ -19,14 +19,14 @@ export default {
     }
   },
   data () {
-    return {}
+    return {};
   },
   methods: {
     goBack () {
       this.$router.go(-1);
-    },
+    }
   }
-}
+};
 </script>
 <style lang="scss">
 @import '~@/common/css/mixin';

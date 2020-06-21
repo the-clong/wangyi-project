@@ -71,7 +71,7 @@ li.image-item {
   }
   .item-text {
     overflow: hidden;
-    height: 40px;
+    height: 46px;
     font-size: 15px;
     line-height: 20px;
     text-align: left;

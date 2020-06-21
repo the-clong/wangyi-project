@@ -61,7 +61,7 @@ export default {
   },
   data () {
     return {
-      limit: 18, 
+      limit: 18,
       videoTags: [],
       videoX: true,
       currentTag: 0,
@@ -145,7 +145,6 @@ export default {
 <style lang="scss">
 #videolist {
   ul > li {
-    background-color: #f8f8f8;
     padding-bottom: 8px;
     .video-item {
       background-color: #fff;

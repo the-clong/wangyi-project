@@ -7,6 +7,7 @@
         </li>
       </ul>
     </scroll>
+    <slot name="classify"></slot>
     <section class="swiper-container slide-swipe-container">
       <div class="swiper-wrapper">
         <scroll ref="pullrefresh" class="scroll-list swiper-slide" :listenScroll="listenScroll" :pullup="isPullup" :pulldown="isPulldown" @onPullUp="pullUpHandle" @onPullDown="pullDownHandle" :data="itemSlide" v-for="(itemSlide,index) in swiperList" :key="index">
@@ -148,7 +149,7 @@ export default {
         font-weight: 430;
         display: inline-block;
         color: black;
-        padding: 10px 8px;
+        padding: 10px 18px;
         &.active {
           color: #ff3a3b;
           border-bottom: 2px solid #e63432;

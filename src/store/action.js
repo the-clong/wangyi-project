@@ -37,3 +37,18 @@ export const setPlayMode = ({ commit }, info) => {
   });
   commit(types.SET_CURRENT_INDEX, currentIndex);
 };
+// 设置歌单列表的数据
+export const setSheetCatList = ({ commit }, cateList) => {
+  const { sub, categories } = cateList;
+  if (sub.length > 0) {
+    // sub.unshift(Object.assign(_.clone(sub[1]), { name: '精品', isNoEdit: true, hot: false, category: '' }));
+    sub.unshift(Object.assign(_.clone(sub[0]), { name: '推荐', isNoEdit: true, hot: false, category: '' }));
+    commit(types.SET_CAT_LIST, sub);
+    commit(types.SET_USER_CAT_LIST, sub.slice(0, 7));
+    commit(types.SET_CATEGORIES, categories);
+  }
+};
+export const changeSheetList = ({ commit }, info) => {
+  commit(types.CHANGE_CAT_LIST, info);
+  commit(types.CHANGE_USER_CAT_LIST, info);
+};

@@ -45,7 +45,7 @@ export default {
     // 登录显示播放器，未登录显示登录按钮
     async getLoginUserInfo () {
       const statusRes = await userApi.getLoginStatusAction();
-      const accountInfo = JSON.parse(sessionStorage.getItem('accountInfo')) || {};
+      const accountInfo = JSON.parse(localStorage.getItem('accountInfo')) || {};
       if (statusRes.code === 200 && accountInfo.id === statusRes.profile.userId) {
         this.searchUserPlayList(accountInfo.id);
       } else {

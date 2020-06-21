@@ -36,6 +36,7 @@ export default {
 @import "@/common/css/index.scss";
 @import "@/common/css/mixin.scss";
 #app {
+  overflow-y: auto;
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

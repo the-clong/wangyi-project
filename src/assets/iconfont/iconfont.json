@@ -6,6 +6,34 @@
   "description": "自己项目的iconfont",
   "glyphs": [
     {
+      "icon_id": "5652413",
+      "name": "加号",
+      "font_class": "jiahao",
+      "unicode": "e60a",
+      "unicode_decimal": 58890
+    },
+    {
+      "icon_id": "7316261",
+      "name": "减号",
+      "font_class": "jianhao",
+      "unicode": "e637",
+      "unicode_decimal": 58935
+    },
+    {
+      "icon_id": "14080570",
+      "name": "hot",
+      "font_class": "hot",
+      "unicode": "e739",
+      "unicode_decimal": 59193
+    },
+    {
+      "icon_id": "689262",
+      "name": "类目 品类 分类 类别",
+      "font_class": "leimu",
+      "unicode": "e7f9",
+      "unicode_decimal": 59385
+    },
+    {
       "icon_id": "13211758",
       "name": "点赞",
       "font_class": "zanpress",

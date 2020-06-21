@@ -1,5 +1,6 @@
 import * as types from './mutation-type';
 import Singer from '@/common/js/singer';
+import * as discover from '@/api/discover';
 import Cookie from 'js-cookie';
 const mutations = {
   [types.SET_USER_TOKEN] (state, userInfo) {
@@ -8,9 +9,8 @@ const mutations = {
     state.accountInfo = account; // 账号基本信息
     // state.profileInfo = profile; // 账号概述
     // state.bindingsInfo = bindings; // 账号绑定信息
-    // 这里用sesstionStorage，如果想开另一个页面也会自动登录用localStorage
-    sessionStorage.setItem('userToken', token);
-    sessionStorage.setItem('accountInfo', JSON.stringify(account));
+    localStorage.setItem('userToken', token);
+    localStorage.setItem('accountInfo', JSON.stringify(account));
     Cookie.set('Token', token); // 存cookie
   },
   // 登出，清空store和sessionStorage
@@ -44,6 +44,30 @@ const mutations = {
   },
   [types.SET_PLAY_STATE] (state, playState) {
     state.playState = playState;
+  },
+  [types.SET_CAT_LIST] (state, catState) {
+    state.catList = catState;
+  },
+  [types.SET_USER_CAT_LIST] (state, userCatState) {
+    state.userCatList = userCatState;
+  },
+  [types.SET_CATEGORIES] (state, categories) {
+    state.categories = categories;
+  },
+  [types.CHANGE_CAT_LIST] (state, info) {
+    if (info.tag === 'sheet') {
+      state.catList.splice(info.index, 1, info.item);
+    }
+    // else {
+    //   state.catList.splice(info.index, 1, info.item);
+    // }
+  },
+  [types.CHANGE_USER_CAT_LIST] (state, info) {
+    if (info.tag === 'sheet') {
+      state.userCatList.push(info.item);
+    } else {
+      state.userCatList.splice(info.index, 1);
+    }
   }
 };
 export default mutations;

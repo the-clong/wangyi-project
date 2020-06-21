@@ -11,7 +11,7 @@ export function searchRecommandSongsAction (data) {
   return api.fetch('/personalized', data);
 }
 // 风格推荐
-export function searchChineseSongs () {
+export function searchUserSubcount () {
   return api.fetch('/user/subcount');
 }
 // 获取所有歌单分类

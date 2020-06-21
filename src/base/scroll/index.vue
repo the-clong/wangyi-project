@@ -107,7 +107,7 @@ export default {
         this.refreshScroll();
       }, this.refreshDelay);
     },
-    inPullDown: function(inPullDown) {
+    inPullDown: function (inPullDown) {
       console.log(inPullDown);
     }
   },

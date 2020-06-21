@@ -1,5 +1,5 @@
 export default class Bill {
-  constructor({ id, nameCJ, picUrl }) {
+  constructor ({ id, nameCJ, picUrl }) {
     this.id = id;
     this.nameCJ = nameCJ;
     this.picUrl = picUrl;

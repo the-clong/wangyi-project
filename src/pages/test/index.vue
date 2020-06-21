@@ -1,172 +1,95 @@
 <!--下拉框父组件-->
 <template>
-  <div id="app">
-    <oSelect @changeOption="onChangeOption" :selectData="selectData"></oSelect>
-    <!--
-        selectData: 传入父组件需要传入的数据；格式:childDataName="parentDataName";
-        onChangeOption： 子组件触发的事件名，通过触发一个事件从而来接收子组件的传过来的数据
-        格式：@childEventName="parentEventName"
-        注：可写多个
-        -->
+  <div class="infinity-sroll-container" style="height: 100%;">
+    <div>
+      <div data-site="start" ref="start" id="firstItemId"></div>
+      <div class="item" v-for="(n, i) in showList" :key="i" :style="{backgroundColor: colors[n % 10]}">
+        {{n}}
+      </div>
+      <div class="end" data-site="end" ref="end" id="lastItemId"></div>
+    </div>
   </div>
 </template>
 <script>
-import oSelect from '@/components/select.vue'; // 引入组件
+import ListScroll from '@/common/js/test';
 export default {
-  name: 'App',
   data () {
     return {
-      selectData: {
-        defaultIndex: 0, // 默认选中的是第几个
-        selectStatus: false, // 通过selectStatus来控制下拉框的显示/隐藏
-        selectOptions: [ // 下拉框中的数据 name这样的参数，看项目是否有需求，可自行修改
-          {
-            name: 'time',
-            context: '按时间排序'
-          },
-          {
-            name: 'view',
-            context: '按浏览量排序'
-          },
-          {
-            name: 'like',
-            context: '按点赞数排序'
-          },
-          {
-            name: 'reply',
-            context: '按回复数排序'
-          },
-          {
-            name: 'reward',
-            context: '按打赏数排序'
-          },
-          {
-            name: 'zuizui',
-            context: '嘴嘴'
-          },
-          {
-            name: 'pipi',
-            context: '屁屁'
-          },
-          {
-            name: 'jiujiu',
-            context: '久久'
-          },
-          {
-            name: 'dachui',
-            context: '大锤'
-          }
-        ]
-      }
+      showList: [],
+      showStart: 10,
+      colors: [
+        '#CCCC33',
+        '#CCCCCC',
+        '#FFFFCC',
+        '#0099FF',
+        '#33CC99',
+        '#FFFFFF',
+        '#ff9900',
+        '#99CC33',
+        '#99CCFF',
+        '#CC9999'
+      ]
     };
   },
-  methods: {
-    onChangeOption (index) {
-      // 子组件通过一个事件来触发onChangeOption方法，从而传递一系列参数，这里的index就是传过来的
-      this.selectData.defaultIndex = index;
-      // 触发过后，动态改变了需要值
-    }
+  created () {
+    this.showList = Array.from({ length: 10 }, (item, index) => index);
   },
-  components: {
-    oSelect
-    // 注册组件
+  watch: {
+    // 'showStart': function (val) {
+    //   this.showList = Array.from({ length: 10 }, (item, index) => val + index);
+    // }
+  },
+  mounted () {
+    const self = this;
+    const ccc = new ListScroll({
+      firstItemId: 'firstItemId',
+      lastItemId: 'lastItemId',
+      itemHeight: 200,
+      container: document.getElementsByClassName('infinity-sroll-container')[0],
+      listSize: this.showList.length,
+      renderFunction: function (firstIndex) {
+        console.log(firstIndex);
+        for (let i = 0; i < 10; i++) {
+          self.showList[i] = i + self.showStart;
+        }
+        // if (self.showList.length > 30) {
+        //   self.showList.splice(0, 10);
+        // }
+        self.showStart += 10;
+      }
+    });
+    console.log(ccc);
+    ccc.startObserver();
+    // const io = new IntersectionObserver((entries) => {
+    //   console.log('in-----');
+    //   if (entries[0] && entries[0].isIntersecting) {
+    //     if (entries[0].target.dataset.site === 'end') {
+    //       this.showStart += 10;
+    //     } else {
+    //       this.showStart = (this.showStart - 10 <= 1) ? 1 : (this.showStart - 10);
+    //     }
+    //   }
+    // }, {
+    //   threshold: [0,0.1,0.5]
+    // });
+    // io.observe(this.$refs.start);
+    // io.observe(this.$refs.end);
   }
 };
 </script>
-<style>
-.select-box {
-  position: relative;
-  max-width: 250px;
-  line-height: 35px;
-  margin: 500px auto;
-}
-.select-title {
-  position: relative;
-  padding: 0 30px 0 10px;
-  border: 1px solid #d8dce5;
-  border-radius: 5px;
-  transition-duration: 300ms;
-  cursor: pointer;
-}
-.select-title:after {
-  content: '';
-  position: absolute;
-  height: 0;
-  width: 0;
-  border-top: 6px solid #d8dce5;
-  border-left: 6px solid transparent;
-  border-right: 6px solid transparent;
-  right: 9px;
-  top: 0;
-  bottom: 0;
-  margin: auto;
-  transition-duration: 300ms;
-  transition-timing-function: ease-in-out;
-}
-.select-title-active {
-  border-color: #409eff;
-}
-.select-title-active:after {
-  transform: rotate(-180deg);
-  border-top-color: #409eff;
-}
-.select-options {
-  position: absolute;
-  padding: 10px 0;
-  bottom: 45px;
-  border: 1px solid #d8dce5;
-  width: 100%;
-  border-radius: 5px;
-}
-.select-option-item {
-  padding: 0 10px;
-  cursor: pointer;
-  transition-duration: 300ms;
-}
-.select-option-item:hover,
-.select-option-active {
-  background: #f1f1f1;
-  color: #409eff;
-}
-.arrow-top {
-  position: absolute;
-  height: 0;
-  width: 0;
-  bottom: -7px;
-  border-bottom: 7px solid #d8dce5;
-  border-left: 7px solid transparent;
-  border-right: 7px solid transparent;
-  left: 0;
-  right: 0;
-  margin: auto;
-  z-index: 99;
-  transform: rotate(180deg);
-}
-.arrow-top:after {
-  content: '';
-  position: absolute;
-  display: block;
-  height: 0;
-  width: 0;
-  border-bottom: 6px solid #fff;
-  border-left: 6px solid transparent;
-  border-right: 6px solid transparent;
-  left: -6px;
-  top: 1px;
-  z-index: 99;
-}
-.slide-down-enter-active,
-.slide-down-leave {
-  transition: all 0.3s ease-in-out;
-  transform-origin: 0 bottom;
-  transform: scaleY(1);
-}
-.slide-down-enter {
-  transform: scaleY(0);
-}
-.slide-down-leave-active {
-  transition: all 0.3s ease-in-out;
-  transform-origin: 0 bottom;
-  transform: scaleY(0);
+<style lang="scss">
+.infinity-sroll-container {
+  .item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 200px;
+    font-weight: bold;
+  }
+  .end {
+    position: relative;
+    top: -400px;
+  }
 }
 </style>

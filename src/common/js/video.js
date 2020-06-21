@@ -1,6 +1,6 @@
 import _ from 'lodash';
 export default class Video {
-  constructor({ title, videoImage, commentCount, shareCount, creator, videoGroup, playCount, playDuration }) {
+  constructor ({ title, videoImage, commentCount, shareCount, creator, videoGroup, playCount, playDuration }) {
     this.title = title;
     this.videoImage = videoImage;
     this.commentCount = commentCount || 0;

@@ -1,5 +1,5 @@
 export default class Song {
-  constructor({ id, name, picUrl, artist, playCount, albumName }) {
+  constructor ({ id, name, picUrl, artist, playCount, albumName }) {
     this.id = id;
     this.name = name;
     this.picUrl = picUrl;

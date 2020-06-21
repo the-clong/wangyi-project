@@ -1,7 +1,7 @@
 
 import _ from 'lodash';
 class RankSong {
-  constructor({ id, name, avater, singerName }) {
+  constructor ({ id, name, avater, singerName }) {
     this.id = id;
     this.name = name;
     this.avater = avater;
@@ -10,7 +10,7 @@ class RankSong {
   }
 }
 export default class Rank {
-  constructor({ id, name, tracks }) {
+  constructor ({ id, name, tracks }) {
     this.id = id;
     this.name = name;
     this.songs = tracks.map(item => {

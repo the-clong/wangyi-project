@@ -35,7 +35,7 @@ export default {
     };
   },
   created () {
-    localStorage.clear();
+    // localStorage.clear();
   },
   watch: {
     'phone.number': function (num) {

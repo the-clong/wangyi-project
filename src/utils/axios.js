@@ -5,7 +5,7 @@ const pending = {}
 // 创建 axios 实例,初始化配置
 const service = axios.create({
   withCredentials: true,
-  headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+  // headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
   responseType: 'json'
 });
 // key: 请求标识；isRequest 完成请求后也需要执行删除记录，所以添加此参数避免执行无用操作
@@ -28,7 +28,7 @@ const getRequestIdentify = (config) => {
 // 请求拦截器
 service.interceptors.request.use(config => {
   // 拦截重复请求
-  removePending(config, true)
+  // removePending(config, true)
   const requestData = getRequestIdentify(config)
   config.cancelToken = new CancelToken((c) => {
     pending[requestData] = c
@@ -41,7 +41,7 @@ service.interceptors.request.use(config => {
 service.interceptors.response.use((response) => {
   const { data, config } = response;
   // 拦截重复请求
-  removePending(config);
+  // removePending(config);
   return data;
 }, (err) => {
   if (err && err.response) {

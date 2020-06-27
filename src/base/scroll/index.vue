@@ -99,7 +99,7 @@ export default {
       // 当页面DOM渲染完成初始化scroll组件
       // isListInit由true变成false
       this.$nextTick(() => {
-        this.initScroll();
+        // this.initScroll();
       });
     },
     data () {
@@ -112,11 +112,11 @@ export default {
     }
   },
   mounted () {
-    if (!this.isListInit) {
-      setTimeout(() => {
+    setTimeout(() => {
+      if (!this.isListInit) {
         this.initScroll();
-      }, 300);
-    }
+      }
+    }, 300);
   },
   methods: {
     initScroll () {

@@ -24,9 +24,7 @@ export default {
   },
   created () {
     const routes = this.$router.options.routes; // 获取所有路由
-    console.log(routes);
     this.footList = routes.slice(0, 5);// _.find(routes, { path: '/' }).children; // 获取Home路由的子节点
-    console.log(this.footList);
   },
   watch: {
     // '$route': function (route) {

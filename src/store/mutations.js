@@ -51,6 +51,9 @@ const mutations = {
   [types.SET_USER_CAT_LIST] (state, userCatState) {
     state.userCatList = userCatState;
   },
+  [types.SET_USER_CAT_INDEX] (state, userCatIndex) {
+    state.userCatIndex = userCatIndex;
+  },
   [types.SET_CATEGORIES] (state, categories) {
     state.categories = categories;
   },

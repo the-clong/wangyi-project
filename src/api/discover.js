@@ -24,10 +24,10 @@ export function searchSongSheetsList (data) {
   return api.fetch('/top/playlist', data, 'GET');
   // return api.fetch('/top/playlist');
 }
-// export function searchSongSheetsList (data) {
-//   return api.fetch('/top/playlist/highquality', data, 'GET');
-//   // return api.fetch('/top/playlist');
-// }
+export function searchHighSheetsList (data) {
+  return api.fetch('/top/playlist/highquality', data, 'GET');
+  // return api.fetch('/top/playlist');
+}
 export function searchRecoResourceAction () {
   return api.fetch('/recommend/resource', 'GET');
   // return api.fetch('/top/playlist');

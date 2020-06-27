@@ -2,6 +2,7 @@ const discover = r => require.ensure([], () => r(require('@/pages/home/discover'
 const rank = r => require.ensure([], () => r(require('@/pages/rank')), 'rank');
 const songSheet = r => require.ensure([], () => r(require('@/pages/song-sheet')), 'songSheet');
 const sheetCategory = r => require.ensure([], () => r(require('@/pages/song-sheet/category')), 'sheetCategory');
+const sheetScroll = r => require.ensure([], () => r(require('@/pages/song-sheet/sheet-scroll')), 'sheetScroll');
 const rankDetail = r => require.ensure([], () => r(require('@/pages/rank/detail')), 'rankDetail');
 const videoList = r => require.ensure([], () => r(require('@/pages/home/videolist')), 'videoList');
 const profile = r => require.ensure([], () => r(require('@/pages/profile')), 'profile');
@@ -88,7 +89,13 @@ export default [
     children: [
       {
         path: '/songSheet/category',
-        component: sheetCategory
+        component: sheetCategory,
+        children: [
+          {
+            path: ':id',
+            component: sheetScroll
+          }
+        ]
       }
     ]
   }

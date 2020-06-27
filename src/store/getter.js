@@ -14,10 +14,12 @@ export const currentIndex = state => state.currentIndex;
 
 export const categories = state => state.categories;
 
-export const userCatList = state => state.userCatList.map((item, index) => {
+export const userCatList = state => state.userCatList.map(item => {
   item.offset = 0;
   return item;
 });
+
+export const userCatIndex = state => state.userCatIndex;
 
 export const currentSong = (state) => {
   return state.playList[state.currentIndex] || {};

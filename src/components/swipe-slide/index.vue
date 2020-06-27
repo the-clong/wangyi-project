@@ -1,8 +1,8 @@
 <template>
   <div id="scroll-swipe">
-    <scroll :data="tags" :scrollX="slideX" class="scroll-tags" ref="tagWrapper" :isListInit="tags.length > 0">
+    <scroll :data="tags" :scrollX="slideX" class="scroll-tags" ref="tagWrapper">
       <ul v-if="tags.length > 0">
-        <li v-for="(item,index) in tags" :key="item.name" @click.stop="changeTags(item,index)" :class="{'active':currentTag === index}" ref="tagItem">
+        <li v-for="(item,index) in tags" :key="item.name" @click="changeTags(item,index,$event)" :class="{'active':currentTag === index}" ref="tagItem">
           {{item.name}}
         </li>
       </ul>
@@ -23,6 +23,7 @@
 <script>
 import scroll from '@/base/scroll';
 import Swiper from 'Swiper';
+import { mapGetters } from 'vuex';
 export default {
   components: {
     scroll
@@ -57,8 +58,20 @@ export default {
       listenScroll: true // 是否监听滚动
     };
   },
+  computed: {
+    ...mapGetters({
+      userCatIndex: 'userCatIndex'
+    })
+  },
   mounted () {
     this.initVideoSwiper();
+  },
+  watch: {
+    // 监听category页面用户选中的类别
+    userCatIndex (index) {
+      // this.$emit('handleUserCat',index);
+      this.changeTags(this.tags[index], index);
+    }
   },
   methods: {
     initVideoSwiper () {
@@ -68,7 +81,7 @@ export default {
         observeParents: true,
         resistanceRatio: 0, // 让slide在边缘不能被拖动
         on: {
-          slideChange: function () {
+          slideChangeTransitionEnd: function () {
             self.changeTags(self.tags[this.activeIndex], this.activeIndex);
           },
           init: function () {
@@ -76,7 +89,8 @@ export default {
         }
       });
     },
-    changeTags (item, index) {
+    changeTags (item, index, e) {
+      console.log(e);
       const tagLeft = this.$refs.tagItem[index].offsetLeft;
       const tagsWidth = $('.scroll-tags ul').width();
       const tagWidth = this.$refs.tagItem[index].clientWidth;
@@ -91,6 +105,7 @@ export default {
         this.$refs.tagWrapper.scrollTo(-(tagLeft + tagWidth / 2 - (window.innerWidth / 2)), 0, 500);
       }
       this.currentTag = index;
+      // 点击tag，进行slide切换
       this.slideSwiper.slideTo(index, 500, false);
       // 请求数据
       this.$emit('searchSlideList', { isDown: true, current: this.currentTag });
@@ -149,7 +164,7 @@ export default {
         font-weight: 430;
         display: inline-block;
         color: black;
-        padding: 10px 18px;
+        padding: 10px 8px;
         &.active {
           color: #ff3a3b;
           border-bottom: 2px solid #e63432;
@@ -161,9 +176,6 @@ export default {
     width: 100%;
     height: calc(100% - 40px);
     .scroll-list {
-      position: relative;
-      overflow-y: hidden;
-      width: 100%;
       ul.sheet-list {
         width: fit-content;
         padding: 5px 0;

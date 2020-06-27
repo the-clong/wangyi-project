@@ -34,12 +34,14 @@
         </ul>
       </div>
     </div>
+    <transition name="slide-fade">
+      <router-view></router-view>
+    </transition>
   </div>
 </template>
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapActions, mapMutations } from 'vuex';
 import twoHeader from '@/components/common/twoHeader';
-import * as discover from '@/api/discover';
 const catMarginLeft = 12;
 const catMarginBottom = 15;
 export default {
@@ -56,9 +58,7 @@ export default {
     };
   },
   created () {
-    setTimeout(() => {
-      // console.log(this.userCatList);
-    });
+    // console.log(this.$store.state.catList);
   },
   computed: {
     ...mapGetters({
@@ -86,9 +86,6 @@ export default {
       immediate: true
     }
   },
-  beforeUpdate () {
-    console.log('before------');
-  },
   methods: {
     changeEdit () {
       this.isEdit = !this.isEdit;
@@ -96,13 +93,13 @@ export default {
     },
     changeTagList (tag, index, p, e) {
       // 下方sheet禁用或者上方的推荐和精品，不让他点
-      if ((p === 'sheet' && tag.isUser) || (index < 2 && p === 'cat')) {
+      if (p === 'sheet' && tag.isUser) {
         return;
       }
       const self = this;
       self.testFlag = false;
       // 编辑状态添加到用户tag
-      if (this.isEdit) {
+      if (this.isEdit && tag.category !== '') {
         const len = this.userCatList.length;
         let targetDom = null;
         if (p === 'sheet') { // cat的最后一个
@@ -168,11 +165,25 @@ export default {
               self.testFlag = true;
             }
           });
-      } else {
-        // 非编辑状态直接跳转歌单列表
+      } else if (!this.isEdit) {
+        if (p === 'sheet') {
+          // 非编辑状态点sheet跳转路由
+          this.$router.push({
+            path: `/songSheet/category/${tag.name}`
+          });
+        } else {
+          // 点击上边的cat跳转歌单广场
+          this.setUserCatIndex(index);
+          this.$router.push({
+            path: '/songSheet'
+          });
+        }
       }
     },
-    ...mapActions(['changeSheetList'])
+    ...mapActions(['changeSheetList']),
+    ...mapMutations({
+      setUserCatIndex: 'SET_USER_CAT_INDEX'
+    })
   }
 };
 </script>
@@ -228,6 +239,14 @@ export default {
           }
         }
       }
+    }
+    .slide-fade-enter-active,
+    .slide-fade-leave-active {
+      transition: all 0.4s ease;
+    }
+    .slide-fade-enter,
+    .slide-fade-leave-to {
+      transform: translateX(100%);
     }
   }
 }

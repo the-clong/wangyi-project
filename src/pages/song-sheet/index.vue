@@ -21,7 +21,7 @@
               {{item.playCount}}
             </div>
           </div>
-          <!-- <div class="mask"></div> -->
+          <div class="mask"></div>
         </div>
       </div>
       <img-item slot-scope="props" slot="slide-items" :playItem="props.item" :showPlayNum="showPlayNum"></img-item>
@@ -45,6 +45,7 @@ export default {
   },
   data () {
     return {
+      jingpinLastTime: '', // 精品需要加的时间字段
       showPlayNum: true, // 是否展示playNum
       limit: 18, // 每页条数
       currentTag: -1, // 当前点击的tag
@@ -94,7 +95,11 @@ export default {
               var slideProgress = this.slides[i].progress;
               const translate = slideProgress * 50 + 'px';
               const scale = 1 - Math.abs(slideProgress) / 8;
-              const zIndex = 100 - Math.abs(Math.round(10 * slideProgress));
+              let zIndex = 100 - Math.abs(Math.round(10 * slideProgress));
+              // 修正zIndex区分两个slide滑到中间时候都在mask上方，改成一个在上一个在下
+              if (zIndex === 95) {
+                zIndex = slideProgress < 0 ? 94 : 96;
+              }
               slide.transform('translateX(' + translate + ') scale(' + scale + ')');
               slide.css('zIndex', zIndex);
               slide.css('opacity', 1);
@@ -140,7 +145,16 @@ export default {
       }
       // 一开始渲染slide的scroll或者用户滑动进行加载数据，不然就用原始的数据
       if (pageParam.offset === 0 || isPull) {
-        const res = await discover.searchSongSheetsList(pageParam);
+        let res = null;
+        if (pageParam.cat !== '精品') {
+          res = await discover.searchSongSheetsList(pageParam);
+        } else {
+          // 通过updateTime进行分页
+          pageParam.before = this.jingpinLastTime || '';
+          pageParam.cat = '全部';
+          res = await discover.searchHighSheetsList(pageParam);
+          this.jingpinLastTime = res.lasttime;
+        }
         const datas = res.playlists.map(item => new Song({
           id: item.id,
           name: item.name,
@@ -188,7 +202,12 @@ export default {
     padding: 15px 0;
     .swiper-wrapper {
       .mask {
-        @include posSite(100%, 90);
+        position: absolute;
+        z-index: 94;
+        width: 320%;
+        left: 0;
+        top: 0;
+        height: 100%;
         background: #fff;
         opacity: 0.6;
         filter: alpha(opacity=60);

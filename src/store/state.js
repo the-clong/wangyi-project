@@ -13,7 +13,8 @@ const state = {
   playState: false, // 播放状态（0代表停止，1代表播放）
   categories: [], // 所有类别
   catList: [], // 歌单分类列表
-  userCatList: [] // 用户歌单列表
+  userCatList: [], // 用户歌单列表
+  userCatIndex: 0 // 用户当前选择的歌单类别(上方tag)
 };
 const constState = Object.assign(state, { userSongSquare: userSongSquare });
 export default constState;

@@ -9,6 +9,7 @@ export const SET_PLAY_STATE = 'SET_PLAY_STATE';// 设置播放状态
 export const SET_PLAY_MODE = 'SET_PLAY_MODE';// 设置播放模式
 export const SET_CAT_LIST = 'SET_CAT_LIST';// 设置所有歌单类别
 export const SET_USER_CAT_LIST = 'SET_USER_CAT_LIST';// 设置用户歌单类别
+export const SET_USER_CAT_INDEX = 'SET_USER_CAT_INDEX';// 设置用户选中歌单类别
 export const SET_CATEGORIES = 'SET_CATEGORIES';// 设置总的类别
 export const CHANGE_CAT_LIST = 'CHANGE_CAT_LIST';// 改变所有类别的
 export const CHANGE_USER_CAT_LIST = 'CHANGE_USER_CAT_LIST';// 设置总的类别

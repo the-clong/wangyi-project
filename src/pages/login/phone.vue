@@ -71,6 +71,7 @@ export default {
       const res = await this.$http.fetch('/login/cellphone', { phone, password }, 'GET');
       if (res.code === 200 && res.loginType) {
         this.setUserInfo(res).then(() => {
+          console.log(res);
           this.$router.push({
             path: '/discover'
           });

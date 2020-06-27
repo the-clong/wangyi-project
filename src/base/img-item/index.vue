@@ -6,7 +6,7 @@
         <svg class="svg-icon" aria-hidden="true">
           <use :xlink:href="'#icon-bofang'"></use>
         </svg>
-        {{playItem.playCount}}
+        <span v-html="playItem.playCount"></span>
       </div>
     </div>
     <slot name="item-title"></slot>
@@ -33,7 +33,6 @@ export default {
     };
   },
   created () {
-    // console.log(this.playItem);
   }
 };
 </script>
@@ -61,6 +60,9 @@ li.image-item {
       font-size: 14px;
       font-weight: 450;
       text-shadow: 2px 2px 2px #696969;
+      > span {
+        color: #fff;
+      }
     }
   }
   .item-title {

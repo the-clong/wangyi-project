@@ -432,6 +432,7 @@ export default {
 <style lang="scss">
 #common-player {
   .normal-player {
+    overflow: hidden;
     position: absolute;
     z-index: 20;
     width: 100%;

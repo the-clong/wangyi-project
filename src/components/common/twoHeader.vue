@@ -31,12 +31,11 @@ export default {
 <style lang="scss">
 @import '~@/common/css/mixin';
 #two-header {
-    z-index: 13;
     background: #fff;
     width: 100%;
     display: flex;
     align-items: center;
-    @include posSite(60px,0,fixed,0,0,0);
+    @include posSite(60px,13,fixed,0,0,0);
     > .back {
       padding: 5px;
       font-size: 28px;

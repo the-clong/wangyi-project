@@ -1,5 +1,5 @@
 <template>
-  <div id="discover" class="preview-container">
+  <div id="discover" class="preview-container" @click="changeTest">
     <Header />
     <scroll class="discover-scroll" :data="listInitArray">
       <ul class="discover-list">
@@ -182,6 +182,9 @@ export default {
     }
   },
   methods: {
+    changeTest () {
+      console.log('changeTest-----');
+    },
     async initBannerData () {
       const res = await discover.getBannerList();
       this.bannerList = res.banners;
@@ -253,6 +256,7 @@ export default {
         promiseArr.push(discover.searchRankTop(item));
       });
       Promise.all(promiseArr).then(res => {
+        console.log(res);
         this.rankList = _.map(res, item => new Rank({
           id: item.playlist && item.playlist.id,
           name: item.playlist.name,
@@ -263,7 +267,6 @@ export default {
     async initDJProgramList () {
       const res = await discover.searchDJProgram();
       this.jdProgramList = _.each(res.result, item => (item.name = item.program.description));
-      console.log(this.jdProgramList);
     },
     initBannerSwiper () {
       this.mySwiper = new Swiper('.banner-container', {

@@ -19,7 +19,7 @@
           </li>
         </ul>
       </div>
-      <div v-for="item in allSongsSheet" :key="item.name" class="songs-item">
+      <div v-for="item in getAllSongsSheet" :key="item.name" class="songs-item">
         <div class="title">{{item.name}}</div>
         <ul class="category-list" ref="sheetCategory">
           <li v-for="(tag,index) in item.children" :key="tag.name" class="ellipsis" :class="{'disable':tag.isUser}" @click="changeTagList(tag,index,'sheet',$event)">
@@ -50,40 +50,26 @@ export default {
   },
   data () {
     return {
-      test: '123',
       testFlag: false,
-      btnText: '编辑',
       isEdit: false,
       allSongsSheet: [] // 所有歌单
     };
   },
   created () {
-    // console.log(this.$store.state.catList);
+    this.btnText = '编辑';
+    // console.log(this.sheetCatList);
   },
   computed: {
     ...mapGetters({
       sheetCatList: 'sheetCatList',
       userCatList: 'userCatList',
-      categories: 'categories'
+      categories: 'categories',
+      getAllSongsSheet: 'getAllSongsSheet'
     }),
     getHotTag () {
       return function (tag) {
         return tag.hot && !this.isEdit ? 'icon svg-icon hot' : 'icon svg-icon';
       };
-    }
-  },
-  watch: {
-    'sheetCatList.length': {
-      handler: function () {
-        const categories = Array.prototype.slice.call({ ...this.categories, length: Object.keys(this.categories).length });
-        this.allSongsSheet = _.map(categories, (item, index) => {
-          return {
-            name: item,
-            children: _.filter(this.sheetCatList, (cat, catIndex) => { cat.isUser = catIndex < 7; cat.catIndex = catIndex; return cat.category === index; })
-          };
-        });
-      },
-      immediate: true
     }
   },
   methods: {
@@ -105,7 +91,7 @@ export default {
         if (p === 'sheet') { // cat的最后一个
           targetDom = $(this.$refs.userCategory[len - 1]);
         } else { // 筛选sheet中匹配的tag
-          const index = _.findIndex(this.allSongsSheet[tag.category].children, item => item.name === tag.name);
+          const index = _.findIndex(this.getAllSongsSheet[tag.category].children, item => item.name === tag.name);
           targetDom = $(this.$refs.sheetCategory[tag.category]).find('li').eq(index);
         }
         const currentDom = $(e.currentTarget);
@@ -145,23 +131,18 @@ export default {
           .on('transitionstart', function () {
             // 点击sheet的时候直接置灰
             if (p === 'cat') {
+              tag.isUser = false;
               currentDom.css('display', 'none');
             }
           });
         // 克隆节点飞入飞出
         cloneDom.css({ left: x, top: y })
           .css({ transition: 'all ease-out 0.3s' })
-          .on('transitionstart', function () {
-            // 点击sheet的时候直接置灰
-            if (p === 'sheet') {
-              currentDom.addClass('disable');
-            }
-          })
           .on('transitionend', function () {
             $(this).css('display', 'none');
             // 控制只调用一次end
             if (!self.testFlag) {
-              self.changeSheetList({ index: p === 'sheet' ? tag.catIndex : index, item, tag: p });
+              self.changeSheetList({ index: p === 'sheet' ? tag.catIndex : index, tag: p, item: tag });
               self.testFlag = true;
             }
           });
@@ -182,6 +163,7 @@ export default {
     },
     ...mapActions(['changeSheetList']),
     ...mapMutations({
+      setCatList: 'SET_CAT_LIST',
       setUserCatIndex: 'SET_USER_CAT_INDEX'
     })
   }

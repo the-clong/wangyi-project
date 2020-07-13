@@ -61,7 +61,8 @@ export default {
   },
   computed: {
     ...mapGetters({
-      userCatList: 'userCatList'
+      userCatList: 'userCatList',
+      sheetCatList: 'sheetCatList'
     })
   },
   watch: {
@@ -126,6 +127,7 @@ export default {
       });
     },
     async initCatAllList () {
+      // 如果新加载页面用请求数据
       const res = await discover.getCategoryList();
       this.setSheetCatList(res);
       const len = this.userCatList.length;
@@ -238,7 +240,8 @@ export default {
       }
     }
   }
-  .slide-fade-enter-active, .slide-fade-leave-active {
+  .slide-fade-enter-active,
+  .slide-fade-leave-active {
     transition: all 0.4s ease;
   }
   .slide-fade-enter,

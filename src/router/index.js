@@ -4,6 +4,10 @@ import VueRouter from 'vue-router';
 import home from './home';
 import common from './common';
 Vue.use(VueRouter);
+const originalPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push (location) {
+  return originalPush.call(this, location).catch(err => err)
+};
 export default new VueRouter({
   mode: 'history',
   routes: [

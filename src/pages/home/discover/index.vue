@@ -75,6 +75,7 @@ import Header from '@/components/common/header';
 import * as discover from '@/api/discover';
 import discoverItem from '@/components/discover-item';
 import discoverSong from '@/components/discover-song';
+import { mapGetters } from 'vuex';
 export default {
   components: {
     Header, scroll, discoverItem, discoverSong
@@ -128,7 +129,10 @@ export default {
       return [this.rsSongsList.length > 0 && this.srSongsList.length > 0 &&
         this.cjSongsList.length > 0 && this.newSongsList.length > 0 &&
         this.rankList.length > 0];
-    }
+    },
+    ...mapGetters({
+      sheetCatList: 'sheetCatList'
+    })
   },
   created () {
     this.mySwiper = null;
@@ -158,7 +162,7 @@ export default {
     this.djSubTitle = '我用此声伴你心';
     this.djBtnText = '查看更多';
     this.djItemType = 'program';
-
+    console.log(this.sheetCatList);
     this.initBannerData();
     this.initRecommendSongs();
     this.initStyleRecommend();

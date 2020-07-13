@@ -1,7 +1,7 @@
 <template>
   <li class="image-item">
     <div class="img-container">
-      <img v-lazy="playItem.picUrl"/>
+      <img v-lazy="playItem.picUrl" />
       <div class="play-num" v-show="showPlayNum">
         <svg class="svg-icon" aria-hidden="true">
           <use :xlink:href="'#icon-bofang'"></use>

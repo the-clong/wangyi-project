@@ -47,6 +47,7 @@ const mutations = {
   },
   [types.SET_CAT_LIST] (state, catState) {
     state.catList = catState;
+    state.testArr = [{ isUser: false }];
   },
   [types.SET_USER_CAT_LIST] (state, userCatState) {
     state.userCatList = userCatState;
@@ -58,19 +59,18 @@ const mutations = {
     state.categories = categories;
   },
   [types.CHANGE_CAT_LIST] (state, info) {
+    // 从sheet到cat是用户自己选的tag
+    const catList = _.clone(state.catList);
     if (info.tag === 'sheet') {
-      state.catList.splice(info.index, 1, info.item);
-    }
-    // else {
-    //   state.catList.splice(info.index, 1, info.item);
-    // }
-  },
-  [types.CHANGE_USER_CAT_LIST] (state, info) {
-    if (info.tag === 'sheet') {
+      catList[info.index].isUser = true;
+      state.testArr[0].isUser = true;
       state.userCatList.push(info.item);
     } else {
+      // 从sheet到cat是用户自己选的tag
+      catList[info.index].isUser = false;
       state.userCatList.splice(info.index, 1);
     }
+    state.catList = catList;
   }
 };
 export default mutations;

@@ -30,6 +30,7 @@ module.exports = {
           require('postcss-px-to-viewport')({
             unitToConvert: 'px',
             viewportWidth: 375,
+            viewportHeight: 667,
             unitPrecision: 3,
             viewportUnit: 'vw',
             fontViewportUnit: 'vw',
@@ -152,7 +153,7 @@ module.exports = {
 	css: {
 		extract: true,
 		sourceMap: false,
-		modules: false
+		requireModuleExtension: false
 	},
   chainWebpack (config) {
     // config.resolve.symlinks(true);

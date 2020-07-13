@@ -13,7 +13,7 @@ export default {
   watch: {
     $route: {
       handler: function () {
-        console.log('watch-------');
+        // console.log('watch-------');
       },
       immediate: true
     }

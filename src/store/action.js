@@ -44,6 +44,7 @@ export const setSheetCatList = ({ commit }, cateList) => {
     sub.unshift(Object.assign(_.clone(sub[2]), { name: '官方', isNoEdit: true, hot: false, category: '' }));
     sub.unshift(Object.assign(_.clone(sub[1]), { name: '精品', isNoEdit: true, hot: false, category: '' }));
     sub.unshift(Object.assign(_.clone(sub[0]), { name: '推荐', isNoEdit: true, hot: false, category: '' }));
+    _.each(sub, (item, index) => { item.catIndex = index; });
     commit(types.SET_CAT_LIST, sub);
     commit(types.SET_USER_CAT_LIST, sub.slice(0, 7));
     commit(types.SET_CATEGORIES, categories);
@@ -51,5 +52,4 @@ export const setSheetCatList = ({ commit }, cateList) => {
 };
 export const changeSheetList = ({ commit }, info) => {
   commit(types.CHANGE_CAT_LIST, info);
-  commit(types.CHANGE_USER_CAT_LIST, info);
 };

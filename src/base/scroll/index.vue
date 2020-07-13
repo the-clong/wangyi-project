@@ -99,24 +99,23 @@ export default {
       // 当页面DOM渲染完成初始化scroll组件
       // isListInit由true变成false
       this.$nextTick(() => {
-        // this.initScroll();
+        this.initScroll();
       });
     },
     data () {
       setTimeout(() => {
-        this.refreshScroll();
+        if (!this.isListInit) {
+          this.initScroll();
+        }
       }, this.refreshDelay);
-    },
-    inPullDown: function (inPullDown) {
-      console.log(inPullDown);
     }
   },
   mounted () {
-    setTimeout(() => {
-      if (!this.isListInit) {
-        this.initScroll();
-      }
-    }, 300);
+    // setTimeout(() => {
+    //   if (!this.isListInit) {
+    //     this.initScroll();
+    //   }
+    // }, 300);
   },
   methods: {
     initScroll () {
